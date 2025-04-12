@@ -6,17 +6,18 @@ import Register from './pages/Register'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
-  
+
 
   return (
     <>
-    <Header/>
-    <Routes>
-      <Route path='/'element={ <Register/>}/>
-    </Routes>
-   
-    <Footer/>
-      
+      <Header />
+      <Routes>
+        <Route path='/' element={<Register />} />
+        <Route path='/register' element={<Register />} />
+      </Routes>
+
+      <Footer />
+
     </>
   )
 }

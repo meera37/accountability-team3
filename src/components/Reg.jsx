@@ -21,7 +21,7 @@ const [isPswdCheck, setIsPswdCheck] = useState(true)
     const validate = (e) => {
         const { name, value , id  } = e.target
         console.log({id,name,value})
-        // console.log(value)
+        
 
         if(name =='username'){
             if(!!value.match('^[0-9a-zA-Z_]+$')){
@@ -48,7 +48,7 @@ const [isPswdCheck, setIsPswdCheck] = useState(true)
                 setIsEmail(false)
             }
         }else if(name == 'passwordcheck'){
-            // setPswdCheck
+            
             
             if(pswd == value){
                 setPswdCheck(value)
@@ -59,43 +59,6 @@ const [isPswdCheck, setIsPswdCheck] = useState(true)
                 
             }
         }
-
-            /*
-
-        if (!!value.match('^[0-9a-zA-Z]+$')) {
-            if (name == 'username') {
-                setUser(value)
-                setIsUser(true)
-            }else if (name == 'password') {
-                setPswd(value)
-                setIsPswd(true)
-            }
-        }else{
-            if (name == 'username') {
-                setUser(value)
-                setIsUser(false)
-            }else if (name == 'password') {
-                setPswd(value)
-                setIsPswd(false)
-            }
-        }
-
-        if(!!value.match('^[0-9a-zA-Z@.]+$')){
-            if(name=='email'){
-                setEmail(value)
-                setIsEmail(true)
-            }else{
-                setEmail(value)
-                setIsEmail(false)
-            }
-        }
-        
-
-        */
-
-
-
-
 
     }
 
@@ -151,9 +114,7 @@ setIsPswdCheck(true);
                         </div>
                         <div className="mt-3 text-center">
                             <span>Already have an account? </span>
-                            {/* <a href="/login" style={{ textDecoration: "none", color: "#1976d2", fontWeight: "bold" }}>
-                                Login
-                            </a> */}
+                            
                             <Link to="" style={{ textDecoration: "none", color: "#1976d2", fontWeight: "bold" }}>
     Login
   </Link>
