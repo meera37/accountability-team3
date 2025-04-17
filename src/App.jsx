@@ -6,6 +6,8 @@ import Register from './pages/Register'
 import Activity from './pages/Activity'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css'
+import Blog from './pages/Blog';
+import KnowMore from './pages/KnowMore';
 
 function App() {
 
@@ -14,9 +16,14 @@ function App() {
     
       <Header/>
         <Routes>
-            <Route path='/' element={<Landing />} />
+            <Route path='/' element={<Landing/>} />
             <Route path='/register' element={<Register />} />
             <Route path={'/activity'} element={<Activity/>} />
+            <Route path={'/blog'} element={<Blog/>} />
+            <Route path={'/knowmore'} element={<KnowMore/>} />
+
+
+
         </Routes>
       <Footer />
               
