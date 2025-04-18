@@ -2,9 +2,11 @@ import { TextField } from '@mui/material'
 import React, { useState } from 'react'
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import { getAllUsersApi, registerUserApi } from '../services/allApi';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 
 
 function Reg() {
@@ -32,8 +34,9 @@ function Reg() {
                 setUser(value)
                 setIsUser(false)
             }
+            // [0-9a-zA-Z_*@]+
         } else if (name == 'password') {
-            if (value.length >= 6 && value.length <= 20 && !!value.match('^[0-9a-zA-Z_*@]+$')) {
+            if (value.length >= 6 && value.length <= 20 && !!value.match('^.{6,20}$')) {
                 setPswd(value)
                 setIsPswd(true)
             } else {
@@ -63,6 +66,8 @@ function Reg() {
 
     }
 
+const navigate = useNavigate()
+
     const handleRegister = async (e) => {
         e.preventDefault();
 
@@ -81,6 +86,7 @@ function Reg() {
         try {
 
             const res = await getAllUsersApi(); 
+            
             const existingUser = res.data.find(
               u => u.username === user || u.email === email
             );
@@ -103,6 +109,10 @@ function Reg() {
                 setIsPswd(true);
                 setIsEmail(true);
                 setIsPswdCheck(true);
+
+                setTimeout(() => {
+                    navigate('/login');
+                  }, 2000);
             }
             else{
                 toast.error("Something went wrong")
@@ -131,11 +141,11 @@ function Reg() {
                                 {email !== "" && !isEmail && <span className='text-danger'>Enter a valid email format (e.g., name@example.com)</span>}
                             </div>
                             <div className="mb-3">
-                                <TextField name='password' value={pswd} id="password" label="Password" variant="outlined" className='w-100' onChange={(e) => validate(e)} inputProps={{ minLength: 6, maxLength: 20 }} />
+                                <TextField name='password' value={pswd} id="password" label="Password" type='password' variant="outlined" className='w-100' onChange={(e) => validate(e)} inputProps={{ minLength: 6, maxLength: 20 }} />
                                 {pswd !== "" && !isPswd && <span className='text-danger'>Password must be 6-20 characters long and can only contain letters, numbers, or symbols like _ @ *</span>}
                             </div>
                             <div className="mb-3">
-                                <TextField name='passwordcheck' value={pswdCheck} id="passwordcheck" label="Confirm Password" variant="outlined" className='w-100' onChange={(e) => validate(e)} />
+                                <TextField name='passwordcheck' value={pswdCheck} id="passwordcheck" label="Confirm Password" type='password' variant="outlined" className='w-100' onChange={(e) => validate(e)} />
                                 {pswdCheck !== "" && !isPswdCheck && <span className='text-danger'>Passwords do not match</span>}
                             </div>
                             <div className="mb-3">
@@ -146,20 +156,33 @@ function Reg() {
                             <div className="mt-3 text-center">
                                 <span>Already have an account? </span>
 
-                                <Link to="" style={{ textDecoration: "none", color: "#1976d2", fontWeight: "bold" }}>
+                                <Link to="/login" style={{ textDecoration: "none", color: "#1976d2", fontWeight: "bold" }}>
                                     Login
                                 </Link>
                             </div>
                         </div>
                     </div>
 
-                    <div className="col-lg-5 col-md-6 d-none d-md-block p-0">
+                    {/* <div className="col-lg-5 col-md-6 d-none d-md-block p-0">
                         <img
                             src="https://media.istockphoto.com/id/500641404/vector/documents-and-hand-with-pen-signs-documents-treaty-signing-concept.jpg?s=612x612&w=0&k=20&c=-_d0R7NOVCGgYc3Qld8p19AxdKO0pLibhGC9gXITlNI="
                             alt="Register"
                             style={{ objectFit: 'cover', width: '100%', height: '100%' }}
                             className="img-fluid rounded shadow"
                         />
+                    </div> */}
+                      <div
+                      className="col-lg-5 col-md-6 d-none d-md-flex flex-column justify-content-center align-items-center p-4 text-white"
+                      style={{
+                        background: 'linear-gradient(135deg, #9c27b0 0%, #7b1fa2 100%)',
+                        animation: 'fadeIn 1s ease-in',
+                      }}
+                    >
+                      <div className="text-center">
+                        <FontAwesomeIcon icon={faCheckCircle} bounce size="3x" className="mb-3" />
+                        <h2>Stay on Track, Every Step</h2>
+                        <p>Consistency creates success — let's start today.</p>
+                      </div>
                     </div>
                 </div>
             </div>
