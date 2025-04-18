@@ -8,6 +8,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css'
 import Blog from './pages/Blog';
 import KnowMore from './pages/KnowMore';
+import DashBoard from './pages/DashBoard';
 
 function App() {
 
@@ -21,6 +22,11 @@ function App() {
             <Route path={'/activity'} element={<Activity/>} />
             <Route path={'/blog'} element={<Blog/>} />
             <Route path={'/knowmore'} element={<KnowMore/>} />
+            <Route path={'/dashboard'} element={<DashBoard/>} />
+
+
+
+
 
 
 
