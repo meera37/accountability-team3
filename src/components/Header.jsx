@@ -18,7 +18,7 @@ function Header() {
   return (
 
     <header className="sg__header sticky top-0 bg-white shadow-md z-50">
-      <div className="sg__container flex flex-wrap items-center justify-between w-full max-w-screen-xl mx-auto px-4 py-3">
+      <div className="sg__container flex items-center justify-between w-full max-w-screen-xl mx-auto px-4">
 
         {/* Logo */}
         <div className="logo flex items-center gap-3 w-full sm:w-auto">
@@ -26,7 +26,6 @@ function Header() {
           <h1 className="text-xl font-semibold">LookOut</h1>
         </div>
 
-        {/* Hamburger Icon */}
         <button
           onClick={() => setmenuopen(!menuopen)}
           className="ham-wrap flex items-center justify-center w-[52px] h-[52px] lg:hidden"
@@ -49,7 +48,7 @@ function Header() {
               to={header_links[text]}
               key={`navigation${idx}`}
               className="capitalize px-3 py-2 text-gray-700 hover:text-blue-600 nav-item block no-underline"
-              onClick={() => setmenuopen(false)} // auto-close on mobile
+              onClick={() => setmenuopen(false)}
             >
               {text}
             </Link>
@@ -66,11 +65,6 @@ function Header() {
         </nav>
       </div>
     </header>
-
-    // /<Link key={`navigation${idx}`} to={`${header_links[url]}`}
-    // className="capitalize px-[12px] py-[8px] nav-item">
-    // 	{url}
-    // </Link> 
   )
 }
 

@@ -3,11 +3,9 @@ import Reg from '../components/Reg'
 
 function Register() {
   return (
-<>
-
-<Reg/>
-
-</>
+  <>
+    <Reg/>
+  </>
   )
 }
 

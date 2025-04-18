@@ -7,7 +7,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import { getAllUsersApi, registerUserApi } from '../services/allApi';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
-
+import { getAllUsersApi, registerUserApi , createUserApi } from  '../services/allApi';
 
 function Reg() {
 
@@ -23,8 +23,6 @@ function Reg() {
 
     const validate = (e) => {
         const { name, value, id } = e.target
-        console.log({ id, name, value })
-
 
         if (name == 'username') {
             if (!!value.match('^[0-9a-zA-Z_]+$')) {
@@ -85,12 +83,11 @@ const navigate = useNavigate()
         }
         try {
 
-            const res = await getAllUsersApi(); 
-            
+            const res = await getAllUsersApi();
             const existingUser = res.data.find(
               u => u.username === user || u.email === email
             );
-        
+
             if (existingUser) {
               toast.error("Username or Email already exists");
               return;
@@ -186,11 +183,7 @@ const navigate = useNavigate()
                     </div>
                 </div>
             </div>
-
-
             <ToastContainer position='top-center' theme="colored" autoClose={2000} />
-
-
         </>
     )
 }
