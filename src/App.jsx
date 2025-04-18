@@ -14,7 +14,7 @@ function App() {
 
   return (
     <>
-    
+
       <Header/>
         <Routes>
             <Route path='/' element={<Landing/>} />
@@ -23,16 +23,9 @@ function App() {
             <Route path={'/blog'} element={<Blog/>} />
             <Route path={'/knowmore'} element={<KnowMore/>} />
             <Route path={'/dashboard'} element={<DashBoard/>} />
-
-
-
-
-
-
-
         </Routes>
       <Footer />
-              
+
     </>
   )
 }
