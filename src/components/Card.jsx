@@ -22,26 +22,23 @@ function Cards() {
                 <Row className="w-100 mt-5">
 
                     {
-                        cards.map((cards) => (
+                        cards.map((item,idx) => (
 
-                            <Col md={4} className='mb-5'>
-
+                            <Col key={`blog-${idx}`} md={4} className='mb-5'>
                                 <Card style={{ width: '100%' }} className='card'>
                                     <Card.Img variant="top" src="https://www.datocms-assets.com/47749/1681485390-ezgif-com-resize-11.png" />
                                     <Card.Body>
-                                        <Card.Title className='fw-bold text-dark'>{cards.title}</Card.Title>
+                                        <Card.Title className='fw-bold text-dark'>{item.title}</Card.Title>
                                         <Card.Text className='text-muted' style={{ textAlign: 'justify' }}>
-                                            {cards.text}
+                                            {item.text}
                                         </Card.Text>
 
                                         <Link to={'/knowmore'}><Button variant="" className='btn-outline-secondary'>Know more</Button></Link>
                                     </Card.Body>
                                 </Card>
-
-
                             </Col>
                         ))
-                    }  
+                    }
 
                 </Row>
 
