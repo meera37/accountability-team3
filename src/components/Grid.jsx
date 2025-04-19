@@ -43,10 +43,10 @@ function Grid() {
       setYear(val)
       if ((val % 400 == 0) || (val % 4 == 0 && (val % 100 != 0))){
         days[1] = 29;
-        console.log(days)
       }else{
         days[1] = 28;
       }
+      console.log(days)
     }
 
   return (

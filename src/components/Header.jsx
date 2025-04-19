@@ -24,10 +24,12 @@ function Header() {
       <div className="sg__container flex items-center justify-between w-full max-w-screen-xl mx-auto px-4">
 
         {/* Logo */}
-        <div className="logo flex items-center gap-3 w-full sm:w-auto">
-          <img src="./vite.svg" alt="brand logo" className="h-10 w-10" />
-          <h1 className="text-xl font-semibold">LookOut</h1>
-        </div>
+        <Link to="/" className="!no-underline">
+            <div className="logo flex items-center gap-3 w-full sm:w-auto">
+              <img src="./vite.svg" alt="brand logo" className="h-10 w-10" />
+              <h1 className="text-xl font-semibold text-green-600">LookOut</h1>
+            </div>
+        </Link>
 
         <button
           onClick={() => setmenuopen(!menuopen)}
