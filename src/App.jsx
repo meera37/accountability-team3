@@ -7,7 +7,7 @@ import Activity from './pages/Activity'
 import Login from './pages/Login';
 import ActivityLister from './components/ActivityLister';
 import Blog from './pages/Blog';
-import KnowMore from './pages/KnowMore';
+import BlogDetail from './pages/BlogDetail';
 import DashBoard from './pages/DashBoard';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css'
@@ -38,8 +38,8 @@ function App() {
                   <Navigate to="/"/>
                 } />
 
-            <Route path={'/blog'} element={<Blog/>} />
-            <Route path={'/knowmore'} element={<KnowMore/>} />
+            <Route path={'/blogs'} element={<Blog/>} />
+            <Route path={'/blogs/:blogslug'} element={<BlogDetail/>} />
             <Route path='/login' element={<Login/>}/>
             <Route path='/register' element={<Register />} />
             <Route path='/dashboard' element={<ActivityLister/>}/>
@@ -48,7 +48,8 @@ function App() {
 
  
         </Routes>
-      <Footer />
+
+      { !isUserLogged &&  <Footer />}
 
     </>
   )
