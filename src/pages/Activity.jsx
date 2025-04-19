@@ -3,6 +3,7 @@ import React , { useState , useEffect }  from 'react';
 import  Grid from '../components/Grid'
 import { Container , Row , Col } from 'react-bootstrap';
 import Options from '../components/Options'
+import Mgrid from '../components/Mgrid';
 
 function Activity({title}){
 
@@ -13,6 +14,7 @@ function Activity({title}){
 			<Row className='justify-center items-start w-100'>
 				<Col md={6}>
 					<Grid/>
+					{/* <Mgrid/> */}
 				</Col>
 				<Col md={4}>
 					<Options />

@@ -18,7 +18,7 @@ function Grid() {
        for(let i = 0 ; i < 31 ;i++){
          if(i < value){
             dayElement.push(
-              <button style={{}} key={`${key}-${i}`} className="border markinput hover:bg-green-500 border-dark rounded-0 border-1"  onClick={(e)=>{handleClick(e)}} variant="light"></button>
+              <button style={{}} key={`${key}-${i}`} className=" markinput hover:bg-green-500 border-dark rounded-0 border-1"  onClick={(e)=>{handleClick(e)}} variant="light"></button>
           )
          }else{
           dayElement.push(

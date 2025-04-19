@@ -95,7 +95,6 @@ function ActivityLister({ tab }) {
     return isValid;
   };
 
-
   const handleCreateActivity = async () => {
     const curUser = localStorage.getItem('curUser');
 
@@ -205,8 +204,6 @@ function ActivityLister({ tab }) {
     activity.name.toLowerCase().includes(search.toLowerCase())
   );
 
-
-
   const fetchActivities = async () => {
     try {
       const response = await fetchAllActivitiesApi();
@@ -218,8 +215,12 @@ function ActivityLister({ tab }) {
 
   return (
     <>
+      <div className="p-4 pt-0 space-y-6">
 
-      <div className="p-4 space-y-6">
+        <div className='d-flex flex-row-reverse'>
+          <img class="rounded-circle shadow-4-strong " width={100} alt="avatar2" src="https://mdbcdn.b-cdn.net/img/new/avatars/1.webp"  />
+          <h1 className='pt-4 pe-3'>Hi  i am </h1>
+        </div>
 
         <SummaryCards />
 
@@ -233,16 +234,20 @@ function ActivityLister({ tab }) {
               placeholder="Search Activities"
               className="w-full border border-gray-300 rounded-full px-4 pr-10 py-2 text-sm text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
-            {search && (
+            {
+             search &&
+             (
               <button
                 onClick={() => setSearch('')}
                 className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 text-sm"
                 aria-label="Clear search"
               >
-                x
+                ×
               </button>
             )}
           </div>
+
+
           <button
             onClick={handleOpen}
             className="bg-blue-600 text-white px-4 py-2 rounded-full hover:bg-blue-700 transition text-sm"
@@ -397,7 +402,8 @@ function ActivityLister({ tab }) {
 
         <div className="bg-white rounded shadow p-4 mb-4">
           <h4 className="mb-2 font-semibold text-gray-800">Public Activities</h4>
-          {filteredPublicActivities.length === 0 ? (
+          {
+           filteredPublicActivities.length === 0 ? (
             <p>No public activities yet</p>
           ) : (
             <div className="overflow-x-auto">
@@ -466,8 +472,8 @@ function ActivityLister({ tab }) {
                       <td className="px-4 py-2 text-center">
                         <button onClick={() => handleOpenDescriptionModal(activity.description)} className="text-blue-500 hover:underline text-sm">
 
-
-                          {activity.description ? (
+                          {
+                          activity.description ? (
                             <>
                               {activity.description.length > descriptionLength ? `${activity.description.slice(0, descriptionLength)}...` : activity.description}
                             </>

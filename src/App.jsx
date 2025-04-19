@@ -9,6 +9,7 @@ import ActivityLister from './components/ActivityLister';
 import Blog from './pages/Blog';
 import BlogDetail from './pages/BlogDetail';
 import DashBoard from './pages/DashBoard';
+import Mgrid from './components/Mgrid';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css'
 import { useNavigate  } from 'react-router-dom';
@@ -45,8 +46,8 @@ function App() {
             <Route path='/dashboard' element={<ActivityLister/>}/>
             <Route path={'/activity'} element={<Activity/>} />
             <Route path={'/dashboard'} element={<DashBoard/>} />
+            <Route path={'/mgrid'} element={<Mgrid/>} />
 
- 
         </Routes>
 
       { !isUserLogged &&  <Footer />}
