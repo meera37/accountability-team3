@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes , Navigate  } from 'react-router-dom';
 import Footer from './components/Footer'
 import Header from './components/Header'
 import Landing from './pages/Landing'
@@ -11,21 +11,39 @@ import KnowMore from './pages/KnowMore';
 import DashBoard from './pages/DashBoard';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css'
+import { useNavigate  } from 'react-router-dom';
 
 function App() {
-
+  const navigate = useNavigate();
+  const isUserLogged = JSON.parse(localStorage.getItem('userLogged'))
+  const currentUser = localStorage.getItem('curUser')
   return (
     <>
-
       <Header/>
         <Routes>
-            <Route path='/' element={<Landing/>} />
-            <Route path='/register' element={<Register />} />
-            <Route path='/login' element={<Login/>}/>
-            <Route path='/dashboard' element={<ActivityLister/>}/>
-            <Route path={'/activity'} element={<Activity/>} />
+
+            <Route
+                path='/'
+                element={ isUserLogged?
+                  <Navigate to="/dashboard" />
+                  :
+                  <Landing />
+                } />
+
+            <Route
+                path='/dashboard'
+                element={ isUserLogged?
+                  <DashBoard/>
+                  :
+                  <Navigate to="/"/>
+                } />
+
             <Route path={'/blog'} element={<Blog/>} />
             <Route path={'/knowmore'} element={<KnowMore/>} />
+            <Route path='/login' element={<Login/>}/>
+            <Route path='/register' element={<Register />} />
+            <Route path='/dashboard' element={<ActivityLister/>}/>
+            <Route path={'/activity'} element={<Activity/>} />
             <Route path={'/dashboard'} element={<DashBoard/>} />
         </Routes>
       <Footer />

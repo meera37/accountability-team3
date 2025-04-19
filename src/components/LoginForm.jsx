@@ -8,8 +8,6 @@ import { faCheckCircle, faLock, faUser } from '@fortawesome/free-solid-svg-icons
 import { loginUserApi } from '../services/allApi';
 import { toast, ToastContainer } from 'react-toastify';
 
-
-
 function LoginForm() {
 
   const [loginId,setLoginId] = useState("")
@@ -18,21 +16,19 @@ function LoginForm() {
   const [loading, setLoading] = useState(false);
 
   const validate = (e)=>{
-    const {name,value} = e.target
-console.log({name,value});
-if(name =='loginId'){
-  setLoginId(value)
-}else if(name == 'password'){
-  setPassword(value)
+      const {name,value} = e.target
+      if(name =='loginId'){
+        setLoginId(value)
+      }else if(name == 'password'){
+        setPassword(value)
+      }
+ }
 
-}
-
-  }
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
-  
+
     if (!loginId || !password) {
       setErrorMessage("Please fill in both fields.");
       return;
@@ -41,35 +37,36 @@ if(name =='loginId'){
       setErrorMessage("Password should be atleast 6 characters")
       return
     }
-  
 
     try {
       setLoading(true);
       setErrorMessage('');
-  
+
       const users = await loginUserApi();
-  
+
       const user = users.find(
         user => user.username === loginId || user.email === loginId
       );
-      
-  
+
+
       if (!user) {
         setErrorMessage("User not found. Please register.");
       } else if (user.password !== password) {
         setErrorMessage("Incorrect password.");
       } else {
-        
+
         toast.success("Login successful!");
+        localStorage.setItem('userLogged',JSON.stringify(true))
+        localStorage.setItem('curUser',user.username)
         setLoginId('');
         setPassword('');
-        setErrorMessage(''); 
-        
+        setErrorMessage('');
+
         setTimeout(() => {
-          navigate('/home');
+          navigate('/dashboard');
         }, 2000);
       }
-  
+
     } catch (err) {
       console.error("Login failed:", err);
       setErrorMessage("Something went wrong. Try again later.");
@@ -77,8 +74,8 @@ if(name =='loginId'){
       setLoading(false);
     }
   };
-  
-  
+
+
 
 
     return (

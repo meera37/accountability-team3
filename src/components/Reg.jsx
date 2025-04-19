@@ -4,10 +4,9 @@ import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
-import { getAllUsersApi, registerUserApi } from '../services/allApi';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
-import { getAllUsersApi, registerUserApi , createUserApi } from  '../services/allApi';
+import { getAllUsersApi, registerUserApi , createUserActivityApi , fetchSingleUserApi } from  '../services/allApi';
 
 function Reg() {
 
@@ -68,6 +67,27 @@ const navigate = useNavigate()
 
     const handleRegister = async (e) => {
         e.preventDefault();
+
+        const bootSeq = {
+                "core": [
+                        "exercise",
+                        "learning",
+                        "self care",
+                        "nutrition",
+                        "Time management",
+                        "journalling"
+                        ],
+                "private": [
+                         "meditation"
+                ],
+                "public": [],
+                "id":user
+            }
+
+	 //const response1 = await fetchSingleUserApi('monica')
+        const response1 = await createUserActivityApi(bootSeq)
+        console.log(response1.data)
+
 
         const isFormValid = user && pswd && email && pswdCheck && isUser && isPswd && isEmail && isPswdCheck;
 

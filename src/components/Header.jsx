@@ -6,6 +6,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRightToBracket } from '@fortawesome/free-solid-svg-icons';
 
 function Header() {
+  const isUserLogged = JSON.parse(localStorage.getItem('userLogged'))
+  const currentUser = localStorage.getItem('curUser')
+
   const [menuopen, setmenuopen] = useState(false)
 
   const header_links = {
@@ -38,7 +41,13 @@ function Header() {
           </div>
         </button>
 
-        {/* Navigation Menu */}
+        {
+         isUserLogged?
+        (
+           <p className='m-0 text-bold'>Hello, {currentUser}</p>
+        )
+         :
+        (
         <nav
           className={`navigation w-full lg:w-auto bg-white lg:bg-transparent transition-all duration-300 ease-in-out ${menuopen ? 'flex flex-col absolute top-full left-0 right-0 px-4 py-2 shadow-md' : 'hidden'
             } lg:flex lg:flex-row lg:static lg:items-center lg:justify-between`}
@@ -55,14 +64,20 @@ function Header() {
           ))}
 
           <div className=''>
-            <Button className='me-4' variant="outlined" endIcon={<FontAwesomeIcon icon={faRightToBracket} />}>
-              Login
-            </Button>
-            <Button variant="contained" >
-              Register
-            </Button>
+            <Link to="/login">
+              <Button className='me-4' variant="outlined" endIcon={<FontAwesomeIcon icon={faRightToBracket} />}>
+                Login
+              </Button>
+            </Link>
+            <Link to="/register">
+              <Button variant="contained" >
+                Register
+              </Button>
+            </Link>
           </div>
-        </nav>
+        </nav>)
+
+        }
       </div>
     </header>
   )

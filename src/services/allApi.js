@@ -16,7 +16,23 @@ export const getAllUsersApi = async () => {
     return response.data;
 };
 
-export const createUserApi = async(reqBody) => {
-	return await commonApi('POST' , `${serverurl}/` , reqBody);
+
+//POST
+export const createUserActivityApi = async(reqBody) => {
+	return await commonApi('POST' , `${serverurl}/alluserhabits` , reqBody);
 };
+
+//GET
+export const fetchSingleUserApi = async(user) => {
+	return await commonApi('GET', `${serverurl}/alluserhabits/${user}` );
+};
+
+//PUT
+
+//PATCH
+
+//DELETE
+
+
+
 
