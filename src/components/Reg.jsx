@@ -4,10 +4,9 @@ import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
-import { getAllUsersApi, registerUserApi } from '../services/allApi';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
-
+import { getAllUsersApi, registerUserApi , createUserActivityApi , fetchSingleUserApi } from  '../services/allApi';
 
 function Reg() {
 
@@ -23,8 +22,6 @@ function Reg() {
 
     const validate = (e) => {
         const { name, value, id } = e.target
-        console.log({ id, name, value })
-
 
         if (name == 'username') {
             if (!!value.match('^[0-9a-zA-Z_]+$')) {
@@ -71,6 +68,27 @@ const navigate = useNavigate()
     const handleRegister = async (e) => {
         e.preventDefault();
 
+        const bootSeq = {
+                "core": [
+                        "exercise",
+                        "learning",
+                        "self care",
+                        "nutrition",
+                        "Time management",
+                        "journalling"
+                        ],
+                "private": [
+                         "meditation"
+                ],
+                "public": [],
+                "id":user
+            }
+
+	 //const response1 = await fetchSingleUserApi('monica')
+        const response1 = await createUserActivityApi(bootSeq)
+        console.log(response1.data)
+
+
         const isFormValid = user && pswd && email && pswdCheck && isUser && isPswd && isEmail && isPswdCheck;
 
         if (!isFormValid) {
@@ -85,12 +103,11 @@ const navigate = useNavigate()
         }
         try {
 
-            const res = await getAllUsersApi(); 
-            
+            const res = await getAllUsersApi();
             const existingUser = res.data.find(
               u => u.username === user || u.email === email
             );
-        
+
             if (existingUser) {
               toast.error("Username or Email already exists");
               return;
@@ -186,11 +203,7 @@ const navigate = useNavigate()
                     </div>
                 </div>
             </div>
-
-
             <ToastContainer position='top-center' theme="colored" autoClose={2000} />
-
-
         </>
     )
 }
