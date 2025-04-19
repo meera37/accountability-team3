@@ -1,49 +1,50 @@
 import React from 'react'
 import { Col, Row } from 'react-bootstrap'
+import { useParams , useLocation } from 'react-router-dom'
 
+function BlogDetail() {
+    const { blogslug } = useParams();
+    const location = useLocation();
+    // const {title, text} = state ;
+    const { item } = location.state || {} ;
+    const { title , text } = item
 
-function KnowMore() {
+    const imgsrc = `https://www.datocms-assets.com/47749/1669927482-60-quotes-on-procrastination.jpg?auto=compress%2Cformat&q=60`
     return (
         <>
             <div className=" lg:w-7/12 mx-auto px-[30px] my-5" >
                 <Row className="text-center mb-4">
                     <Col>
-                        <h1>Inspiring Quotes About Procrastination to Boost Motivation and Productivity</h1>
+                        <h1>{title}</h1>
                     </Col>
                 </Row>
-
 
                 <Row className="justify-content-center mb-4">
                     <Col xs={12} md={8} lg={8}>
                         <img
-                            src="https://www.datocms-assets.com/47749/1669927482-60-quotes-on-procrastination.jpg?auto=compress%2Cformat&q=60"
+                            src={ imgsrc }
                             alt="no image"
-                           
                         />
                     </Col>
                 </Row>
 
-            
+
                 <Row className="mb-5">
                     <Col>
                         <p className="text-center" style={{textAlign:'justify' ,fontSize: 'clamp(1rem, 2vw, 1.4rem)'}} >
-                            Often procrastination strikes when you’re low on energy, feeling overwhelmed by a very busy life, and when you’ve already used up all your enthusiasm. It becomes hard to break down complex overwhelming tasks into small manageable tasks.
-
-                            But a spark of inspiration can turn that mood around. Finding quotes about procrastination that resonates with you can change your day into a productive one and remind you what you’re working towards.
-
-                            So let's take a look at some of the best quotes about procrastination from funny procrastination quotes that will help you see the bright side to famous quotes about procrastination that just make sense.
+                            {text}
                         </p>
                     </Col>
                 </Row>
 
-            
+
                 <Row className="text-center mb-3">
                     <Col>
                         <h2>Built-In Accountability Partners to Keep You on Track</h2>
                     </Col>
                 </Row>
 
-        
+
                 <Row>
                     <Col >
                         <p className="text-center" style={{textAlign:'justify' ,fontSize: 'clamp(1rem, 2vw, 1.4rem)'}}>
@@ -60,4 +61,4 @@ function KnowMore() {
     )
 }
 
-export default KnowMore
+export default BlogDetail

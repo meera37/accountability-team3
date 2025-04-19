@@ -1,11 +1,17 @@
 import React from 'react'
 import { Col, Container, Row, Card, Button } from 'react-bootstrap'
 import '../pages/Card.css'
-import { Link } from 'react-router-dom'
-
-
+import { Link , useNavigate } from 'react-router-dom'
 
 function Cards() {
+
+    const navigate = useNavigate();
+
+    const handleMore = (item,index) => {
+        let postslug = item?.title.split(" ")[0]
+        // console.log({postslug, item })
+        navigate(`/blogs/${postslug}-${index}`,{ state:{item} })
+    }
 
     const cards = [
         { title: 'Accountability', text: 'Kit Slocum, ADHD coach and FLOWN facilitator, explains how she uses tactile visual cues to help her remember things and take the right actions.' },
@@ -14,8 +20,8 @@ function Cards() {
         { title: 'Accountability', text: ' Kit Slocum, ADHD coach and FLOWN facilitator, explains how she uses tactile visual cues to help her remember things and take the right actions.' },
         { title: 'Accountability', text: 'Explore 10 ways virtual coworking helps you stay focused, build routines, and crush goals—all from the comfort of home.' },
         { title: 'Accountability', text: ' Stop procrastination becoming “the thief of time”. Get unstuck with 60 of our favourite quotes about proscrastination for a motivation.' },
-
     ]
+
     return (
         <>
             <Container className="d-flex justify-content-center align-items-center flex-column">
@@ -33,7 +39,7 @@ function Cards() {
                                             {item.text}
                                         </Card.Text>
 
-                                        <Link to={'/knowmore'}><Button variant="" className='btn-outline-secondary'>Know more</Button></Link>
+                                        <Button onClick={()=> {handleMore(item,idx+1)}} variant="" className='btn-outline-secondary'>Know more</Button>
                                     </Card.Body>
                                 </Card>
                             </Col>

@@ -46,8 +46,13 @@ function ActivityLister({tab}) {
       description: activityDescription,
       duration: activityDuration,
       type: activityType,
-      author: 'Current User',
+      author: localStorage.getItem('curUser') ,
     };
+
+    console.log(newActivity);
+    // TODO Form validation
+    
+
 
     setAllActivities([...allActivities, newActivity]);
 
@@ -61,6 +66,7 @@ function ActivityLister({tab}) {
     setActivityDescription('');
     setActivityDuration('');
     setActivityType('public');
+
     handleClose();
   };
 
@@ -187,7 +193,7 @@ function ActivityLister({tab}) {
         </Modal>
 
 {/* Description Modal */}
-<Modal show={showDescriptionModal} onHide={handleCloseDescriptionModal} centered>
+      <Modal show={showDescriptionModal} onHide={handleCloseDescriptionModal} centered>
         <Modal.Header closeButton>
           <Modal.Title>Activity Description</Modal.Title>
         </Modal.Header>
