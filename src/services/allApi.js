@@ -33,6 +33,8 @@ export const fetchSingleUserApi = async(user) => {
 
 //DELETE
 
+//Blog component-cards
 
-
-
+export const getBlogDetailsApi = async (id) => {
+    return await commonApi('GET' , `${serverurl}/blogs`,[])
+  }

@@ -45,6 +45,8 @@ function App() {
             <Route path='/dashboard' element={<ActivityLister/>}/>
             <Route path={'/activity'} element={<Activity/>} />
             <Route path={'/dashboard'} element={<DashBoard/>} />
+
+ 
         </Routes>
 
       { !isUserLogged &&  <Footer />}
