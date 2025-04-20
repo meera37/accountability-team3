@@ -37,7 +37,7 @@ export const createActivityHistoryApi = async (reqBody) => {
 };
 
 //Blog component-cards
-export const getBlogDetailsApi = async (id) => {
+export const getBlogDetailsApi = async () => {
     return await commonApi('GET' , `${serverurl}/blogs`,[])
 }
 
