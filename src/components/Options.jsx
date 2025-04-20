@@ -27,8 +27,8 @@ const handleClick = (id) => {
   ];
 
   return (
-    <div className="lg:mt-[20px]">
-      <h2 className="text-center text-2xl text-dark-600">Options</h2>
+    <div className="lg:mt-[20px] bg-amber-300 mt-5 p-5 rounded shadow border boeder-3 mb-5">
+      <h2 className="text-center text-2xl fw-bold mb-5">Options</h2>
 
       <div className="checkbox-container">
         {

@@ -15,14 +15,14 @@ function Landing() {
           <Row className="justify-content-start text-start">
             <Col xs={12} md={8} lg={10}>
               <Container className="bg-amber-400 shadow rounded p-4">
-               <div className='hero-text border border-black p-3 shadow'>
+                <div className='hero-text border border-black p-3 shadow'>
                   <h1 className="text-black fw-bold display-5 display-md-3">
                     Your Accountability Partner Awaits
                   </h1>
                   <p className="text-muted fw-bold mt-3 fs-6 fs-md-5">
                     Connect with people who share your goals, stay motivated together, and build powerful habits that last — one connection at a time.
                   </p>
-               </div>
+                </div>
 
               </Container>
               <div className="mt-4 d-flex flex-column flex-sm-row gap-3">
@@ -383,49 +383,6 @@ function Landing() {
         </Row>
       </Container>
 
-      {/* Team Section */}
-      {/* <Container>
-        <div className="bg-light p-4 p-md-5 rounded-4 shadow-sm mb-5">
-          <h4 className="fw-bold text-center mb-5 text-dark">Meet the Team</h4>
-          <Row className="g-4">
-            <Col xs={12} sm={6} md={4}>
-              <div className="team-card text-center">
-                <h5 className="text-dark fw-bold">Johns</h5>
-                <p className="text-muted  small">UX Designer</p>
-                <p className="text-white small">Passionate about making productivity feel joyful and intuitive.</p>
-              </div>
-            </Col>
-            <Col xs={12} sm={6} md={4}>
-              <div className="team-card text-center">
-                <h5 className="text-dark fw-bold">Savith</h5>
-                <p className="text-muted small">Full Stack Developer</p>
-                <p className="text-white small">Loves building tools that solve real-life problems for real people.</p>
-              </div>
-            </Col>
-            <Col xs={12} sm={6} md={4}>
-              <div className="team-card text-center">
-                <h5 className="text-dark fw-bold">Bhavijith</h5>
-                <p className="text-muted  small">Community Manager</p>
-                <p className="text-white small">Believes support and accountability are key to long-term success.</p>
-              </div>
-            </Col>
-            <Col xs={12} sm={6} md={4}>
-              <div className="team-card text-center">
-                <h5 className="text-dark fw-bold">Meera Benny</h5>
-                <p className="text-muted  small">UX Designer</p>
-                <p className="text-white small">Passionate about making productivity feel joyful and intuitive.</p>
-              </div>
-            </Col>
-            <Col xs={12} sm={6} md={4}>
-              <div className="team-card text-center">
-                <h5 className="text-dark fw-bold">Aiswarya K A</h5>
-                <p className="text-muted  small">UX Designer</p>
-                <p className="text-white small">Passionate about making productivity feel joyful and intuitive.</p>
-              </div>
-            </Col>
-          </Row>
-        </div>
-      </Container> */}
 
       {/* Contact Form */}
 
