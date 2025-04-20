@@ -69,20 +69,12 @@ const navigate = useNavigate()
         e.preventDefault();
 
         const bootSeq = {
-                "core": [
-                        "exercise",
-                        "learning",
-                        "self care",
-                        "nutrition",
-                        "Time management",
-                        "journalling"
-                        ],
-                "private": [
-                         "meditation"
-                ],
-                "public": [],
-                "id":user
-            }
+            "core": [ "exercise","learning", "self care", "nutrition", "Time management", "journalling" ],
+            "private": [],
+            "public": [],
+            "archived": [],
+            "id":user
+        }
 
 	 //const response1 = await fetchSingleUserApi('monica')
         const response1 = await createUserActivityApi(bootSeq)

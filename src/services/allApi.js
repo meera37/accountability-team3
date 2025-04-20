@@ -56,3 +56,8 @@ export const createActivityApi = async (reqBody) => {
 export const fetchAllActivitiesApi = async () => {
     return await commonApi('GET', `${serverurl}/activities`);
 };
+
+export const createUserApi = async(reqBody) => {
+	return await commonApi('POST' , `${serverurl}/` , reqBody);
+};
+

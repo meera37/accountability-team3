@@ -2,8 +2,12 @@ import React,{useState} from 'react'
 import SideBar from '../components/SideBar'
 import { Col, Container, Row } from 'react-bootstrap'
 import ActivityLister from '../components/ActivityLister'
+import Explore from '../components/Explore'
+import Notifications from '../components/Notifications'
+
 function DashBoard() {
     const [tab,setTab] = useState('dashboard')
+    console.log(tab)
     return (
         <>
             <Container fluid>
@@ -12,7 +16,9 @@ function DashBoard() {
                         <SideBar setTab={setTab} />
                     </Col>
                     <Col className='p-5' sm={12} md={9} lg={10}>
-                        <ActivityLister  tab={tab}/>
+                        <ActivityLister tab={tab}/>
+                        <Explore tab={tab} />
+                        <Notifications tab={tab} />
                     </Col>
                 </Row>
             </Container>

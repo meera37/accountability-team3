@@ -141,20 +141,11 @@ function ActivityLister({ tab }) {
           [newActivity.name]: {
             type: newActivity.type,
             startDate: new Date().toISOString().slice(0, 10),
-            endDate: 'never',
+            endDate: activityDuration ,
             options: {
-              "intensityScale": [
-                0,
-                1,
-                2,
-                3,
-                4,
-                5
-              ]
+              "intensityScale": [ 0,1,2, 3, 4, 5 ]
             },
-            history: {
-              "2025": []
-            },
+            history: (activityDuration != '365')? []:{ "2025": [] },
           },
         };
 
@@ -215,17 +206,16 @@ function ActivityLister({ tab }) {
 
   return (
     <>
-      <div className="p-4 pt-0 space-y-6">
+      <div aria-hidden={ tab !='dashboard'} className={`p-4 pt-0 space-y-6 ${tab=='dashboard'? 'block':'hidden' }`}>
 
         <div className='d-flex flex-row-reverse'>
-          <img class="rounded-circle shadow-4-strong " width={100} alt="avatar2" src="https://mdbcdn.b-cdn.net/img/new/avatars/1.webp"  />
+          <img className="rounded-circle shadow-4-strong " width={100} alt="avatar2" src="https://mdbcdn.b-cdn.net/img/new/avatars/1.webp"  />
           <h1 className='pt-4 pe-3'>Hi  i am </h1>
         </div>
 
         <SummaryCards />
 
         <div className="flex justify-center items-center gap-3 flex-wrap">
-
           <div className="relative w-[300px] sm:w-[400px]">
             <input
               type="text"
@@ -246,7 +236,6 @@ function ActivityLister({ tab }) {
               </button>
             )}
           </div>
-
 
           <button
             onClick={handleOpen}
@@ -277,7 +266,6 @@ function ActivityLister({ tab }) {
                 )}
               </Form.Group>
 
-
               <Form.Group className="mb-3" controlId="activityDescription">
                 <Form.Label>Description</Form.Label>
                 <Form.Control
@@ -292,12 +280,12 @@ function ActivityLister({ tab }) {
                 )}
               </Form.Group>
 
-
               <Form.Group className="mb-3" controlId="activityDuration">
                 <Form.Label>Duration</Form.Label>
                 <Form.Control
                   as="select"
-                  value={activityDuration}
+                  value={activityDuration
+                  }
                   onChange={(e) => setActivityDuration(e.target.value)}
                 >
                   <option value="">Select Duration (days)</option>
@@ -305,6 +293,7 @@ function ActivityLister({ tab }) {
                   <option value="30">30</option>
                   <option value="45">45</option>
                   <option value="60">60</option>
+                  <option value="365">lifeTime</option>
                 </Form.Control>
                 {errors.activityDuration && (
                   <Form.Text className="text-danger">{errors.activityDuration}</Form.Text>
@@ -368,7 +357,8 @@ function ActivityLister({ tab }) {
                     </tr>
                   </thead>
                   <tbody>
-                    {filteredAllActivities.map((activity, idx) => (
+                    {
+                     filteredAllActivities.map((activity, idx) => (
                       <tr key={idx} className="border-b">
                         <td className="px-4 py-2 text-gray-700 text-sm">{activity.name}</td>
                         <td className="px-4 py-2 text-gray-700 text-sm">by {activity.curUser}</td>
@@ -388,8 +378,8 @@ function ActivityLister({ tab }) {
                           {activity.type.charAt(0).toUpperCase() + activity.type.slice(1)}
                         </td>
                         <td className="px-4 py-2 text-center">
-                          <button className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 text-sm">
-                            Delete
+                          <button className="bg-green-500 text-white px-2 py-1 rounded hover:bg-red-600 text-sm">
+                            Archive
                           </button>
                         </td>
                       </tr>
@@ -436,8 +426,8 @@ function ActivityLister({ tab }) {
                       </td>
                       <td className="px-4 py-2 text-center text-gray-700 text-sm">Public</td>
                       <td className="px-4 py-2 text-center">
-                        <button className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 text-sm">
-                          Delete
+                        <button className="bg-green-500 text-white px-2 py-1 rounded hover:bg-red-600 text-sm">
+                            Archive
                         </button>
                       </td>
                     </tr>
@@ -484,8 +474,8 @@ function ActivityLister({ tab }) {
                       </td>
                       <td className="px-4 py-2 text-center text-gray-700 text-sm">Private</td>
                       <td className="px-4 py-2 text-center">
-                        <button className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 text-sm">
-                          Delete
+                        <button className="bg-green-500 text-white px-2 py-1 rounded hover:bg-red-600 text-sm">
+                          Archive
                         </button>
                       </td>
                     </tr>

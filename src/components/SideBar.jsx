@@ -20,7 +20,7 @@ const handleLogout = () => {
         <>
             <ul className='text-muted mt-4 flex flex-row flex-md-column list-unstyled md:!sticky md:top-[100px] justify-between'>
                 <li className='mt-3 '>
-                <Link onClick={()=> {setTab('dashboard')}} className=" flex flex-col md:flex-row items-center text-black" to={'/dashboard'} 
+                <Link onClick={()=> {setTab('dashboard')}} className=" flex flex-col md:flex-row items-center text-black" to={'/dashboard'}
                 style={{textDecoration: 'none'}}>
                     <FontAwesomeIcon icon={faHouseUser} className='me-2 ms-3' />Dashboard
                 </Link>
@@ -31,16 +31,16 @@ const handleLogout = () => {
                     </Link>
                 </li>
                 <li className='flex flex-col md:flex-row items-center mt-3 '>
-                <Link  className="flex flex-col md:flex-row items-center  text-black" style={{textDecoration: 'none'}}>
-                <FontAwesomeIcon icon={faBell} className='me-2 ms-3' />Notification
-                </Link>
+                    <Link onClick={() => {setTab('notifications')}} className="flex flex-col md:flex-row items-center  text-black" style={{textDecoration: 'none'}}>
+                        <FontAwesomeIcon icon={faBell} className='me-2 ms-3' />Notification
+                    </Link>
                 </li>
                 <li className='flex flex-col md:flex-row items-center mt-3 '>
                 <Link onClick={() => {handleLogout()}} className="flex flex-col md:flex-row items-center  text-black" style={{textDecoration: 'none'}}>
                     <FontAwesomeIcon icon={faRightFromBracket} className='me-2 ms-3' />Logout
                 </Link>
                 </li>
-                
+
             </ul>
         </>
     )
