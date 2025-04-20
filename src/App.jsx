@@ -13,6 +13,7 @@ import Mgrid from './components/Mgrid';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css'
 import { useNavigate  } from 'react-router-dom';
+import NotFoundPage from './pages/NotFoundPage';
 
 function App() {
   const navigate = useNavigate();
@@ -52,6 +53,8 @@ function App() {
             <Route path={'/activity'} element={<Activity/>} />
             <Route path={'/dashboard'} element={<DashBoard/>} />
             <Route path={'/mgrid'} element={<Mgrid/>} />
+            <Route path={'*'} element={<NotFoundPage/>}/>
+
 
         </Routes>
 
