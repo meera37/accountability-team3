@@ -6,15 +6,13 @@ import { Link, useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
-import { getAllUsersApi, registerUserApi , createUserActivityApi , fetchSingleUserApi } from  '../services/allApi';
+import { getAllUsersApi, registerUserApi , createUserActivityApi , fetchSingleUserApi , createActivityHistoryApi } from  '../services/allApi';
 
 function Reg() {
-
     const [user, setUser] = useState("")
     const [pswd, setPswd] = useState("")
     const [email, setEmail] = useState("")
     const [pswdCheck, setPswdCheck] = useState("")
-
     const [isUser, setIsUser] = useState(true)
     const [isPswd, setIsPswd] = useState(true)
     const [isEmail, setIsEmail] = useState(true)
@@ -60,26 +58,36 @@ function Reg() {
 
             }
         }
-
     }
 
-const navigate = useNavigate()
+    const navigate = useNavigate()
 
     const handleRegister = async (e) => {
         e.preventDefault();
 
+        let core = [ "exercise","learning", "self care", "nutrition", "Time management", "journalling" ]
         const bootSeq = {
-            "core": [ "exercise","learning", "self care", "nutrition", "Time management", "journalling" ],
+            "core": core,
             "private": [],
             "public": [],
             "archived": [],
             "id":user
         }
 
-	 //const response1 = await fetchSingleUserApi('monica')
-        const response1 = await createUserActivityApi(bootSeq)
-        console.log(response1.data)
+        let startdate =  new Date().toISOString().slice(0,10)
+        let historySequence = {
+            id: user ,
+        }
 
+        core.forEach( item => ( historySequence[item] = {
+            type: "core",
+            startDate: startdate ,
+            endDate: "never",
+            options: {
+                 "intensityScale": [ 0,1,2, 3, 4, 5 ]
+            },
+            history: {"2025":[]}
+        }))
 
         const isFormValid = user && pswd && email && pswdCheck && isUser && isPswd && isEmail && isPswdCheck;
 
@@ -109,7 +117,8 @@ const navigate = useNavigate()
 
             if (response.status >= 200 && response.status < 300) {
                 toast.success("Registered Successfully")
-
+                const response = await createActivityHistoryApi(historySequence)
+                const response1 = await createUserActivityApi(bootSeq)
                 setUser("");
                 setPswd("");
                 setEmail("");
@@ -127,7 +136,7 @@ const navigate = useNavigate()
                 toast.error("Something went wrong")
             }
         } catch (error) {
-            console.log("Register error:", error);
+            // console.log("Register error:", error);
             toast.error("Registration failed")
         }
 

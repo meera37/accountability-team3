@@ -18,7 +18,7 @@ const handleLogout = () => {
 
     return (
         <>
-            <ul className='text-muted mt-4 flex flex-row flex-md-column list-unstyled md:!sticky md:top-[100px] justify-between'>
+            <ul className='text-muted mt-4 flex flex-row flex-md-column list-unstyled md:!stick md:top-[100px] justify-between'>
                 <li className='mt-3 '>
                 <Link onClick={()=> {setTab('dashboard')}} className=" flex flex-col md:flex-row items-center text-black" to={'/dashboard'}
                 style={{textDecoration: 'none'}}>

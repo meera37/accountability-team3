@@ -3,8 +3,7 @@ import SummaryCards from './SummaryCards'
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
-import { createActivityApi, createActivityHistoryApi, fetchAllActivitiesApi, fetchAllUserHistoryApi } from '../services/allApi';
-import { fetchSingleUserApi, updateAllUserHistoryApi, updateUserHabitsApi } from '../services/allApi';
+import {  fetchAllActivitiesApi, fetchSingleUserApi , updateUserHabitsApi, patchHistoryApi  } from '../services/allApi';
 
 function ActivityLister({ tab }) {
 
@@ -12,14 +11,9 @@ function ActivityLister({ tab }) {
     let curUser = localStorage.getItem('curUser')
     // console.log({curUser})
     fetchdata(curUser)
-    fetchActivities()
+    // fetchActivities()
   }, [])
 
-  //  const fetchdata = async (curUser) => {
-  //     const request = await fetchSingleUserApi(curUser)
-  //     const data = request.data;
-  //     console.log(data)
-  //  }
   const fetchdata = async (curUser) => {
     try {
       const request = await fetchSingleUserApi(curUser);
@@ -98,7 +92,12 @@ function ActivityLister({ tab }) {
   const handleCreateActivity = async () => {
     const curUser = localStorage.getItem('curUser');
 
-    if (validateForm()) {
+    if (!validateForm()){
+       console.log('error')
+       // TODO toastify error popup
+       return;
+    }
+
       const newActivity = {
         name: activityName,
         description: activityDescription,
@@ -106,12 +105,32 @@ function ActivityLister({ tab }) {
         type: activityType,
         author: curUser,
       };
-      try {
-        const response = await createActivityApi(newActivity);
-        console.log("Activity added successfully:", response);
-      } catch (error) {
-        console.error("Error adding activity:", error);
+
+      const request = await fetchSingleUserApi(curUser);
+      const userData = request.data;
+
+      const updatedUserData = { ...userData , [activityType]: [ activityName, ...userData[activityType] ]  }
+      // console.log({updatedUserData})
+
+      try{
+        const response = await updateUserHabitsApi(updatedUserData);
+        console.log(response.data)
+      }catch(error){
+        console.log(error)
       }
+
+      const update_history =  {
+        type: activityType ,
+        description: activityDescription,
+        startDate: new Date().toISOString().slice(0, 10),
+        endDate: "never",
+        options: { "intensityScale": [ 0,1,2,3,4,5] },
+        history: []
+     }
+      //history: (activityDuration != '365')? []:{ "2025": [] },
+
+      const updateHistoryResponse = await patchHistoryApi({id:curUser, [newActivity.name]: update_history });
+      console.log(updateHistoryResponse.data)
 
       const currentUserHabits = {
         core: [...allActivities.filter(act => act.type === 'core').map(act => act.name)],
@@ -130,62 +149,18 @@ function ActivityLister({ tab }) {
         setPrivateActivities([...privateActivities, newActivity]);
       }
 
-      try {
-        const habitsResponse = await updateUserHabitsApi(curUser, currentUserHabits);
-        console.log("Habits updated successfully:", habitsResponse.data);
+      setActivityName('');
+      setActivityDescription('');
+      setActivityDuration('');
+      setActivityType('public');
+      setErrors({});
+      handleClose();
 
-        const allHistoryResponse = await fetchAllUserHistoryApi();
-        const allHistoryData = allHistoryResponse.data;
-
-        const historyUpdate = {
-          [newActivity.name]: {
-            type: newActivity.type,
-            startDate: new Date().toISOString().slice(0, 10),
-            endDate: activityDuration ,
-            options: {
-              "intensityScale": [ 0,1,2, 3, 4, 5 ]
-            },
-            history: (activityDuration != '365')? []:{ "2025": [] },
-          },
-        };
-
-        const userHistoryObject = allHistoryData.find(history => history.id === curUser);
-
-        if (userHistoryObject) {
-
-          const updatedHistory = {
-            ...userHistoryObject.history,
-            ...historyUpdate,
-          };
-          const updatedUserHistoryObject = { id: curUser, history: updatedHistory };
-          const updateHistoryResponse = await updateAllUserHistoryApi(updatedUserHistoryObject);
-          console.log("History updated successfully:", updateHistoryResponse.data);
-        } else {
-
-          const newUserHistoryObject = {
-            id: curUser,
-            history: historyUpdate,
-          };
-          const createNewHistoryResponse = await createActivityHistoryApi(newUserHistoryObject);
-          console.log("New history created successfully:", createNewHistoryResponse.data);
-        }
-
-        setActivityName('');
-        setActivityDescription('');
-        setActivityDuration('');
-        setActivityType('public');
-        setErrors({});
-        handleClose();
-      } catch (error) {
-        console.error("Error updating data:", error);
-      }
-    }
-  };
+    };
 
   const filteredAllActivities = allActivities.filter(activity =>
     activity.name.toLowerCase().includes(search.toLowerCase())
   );
-
 
   const filteredPublicActivities = publicActivities.filter(activity =>
     activity.name.toLowerCase().includes(search.toLowerCase())

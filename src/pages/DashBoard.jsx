@@ -7,7 +7,6 @@ import Notifications from '../components/Notifications'
 
 function DashBoard() {
     const [tab,setTab] = useState('dashboard')
-    console.log(tab)
     return (
         <>
             <Container fluid>

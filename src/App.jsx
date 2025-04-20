@@ -39,6 +39,11 @@ function App() {
                   <Navigate to="/"/>
                 } />
 
+            <Route
+                path='/login'
+                element= { isUserLogged? <Navigate to='/dashboard' />: <Login /> }
+                />
+
             <Route path={'/blogs'} element={<Blog/>} />
             <Route path={'/blogs/:blogslug'} element={<BlogDetail/>} />
             <Route path='/login' element={<Login/>}/>
