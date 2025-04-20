@@ -3,7 +3,7 @@ import { commonApi } from "./commonApi"
 
 //register component
 export const registerUserApi = async (reqBody)=>{
-    return await commonApi('POST', `${serverurl}/users`, reqBody)
+  return await commonApi('POST', `${serverurl}/users`, reqBody)
 }
 
 export const getAllUsersApi = async () => {
@@ -16,7 +16,6 @@ export const getAllUsersApi = async () => {
     return response.data;
 };
 
-
 //POST
 export const createUserActivityApi = async(reqBody) => {
 	return await commonApi('POST' , `${serverurl}/alluserhabits` , reqBody);
@@ -27,14 +26,33 @@ export const fetchSingleUserApi = async(user) => {
 	return await commonApi('GET', `${serverurl}/alluserhabits/${user}` );
 };
 
-//PUT
+//PUT   (update user habits)
+export const updateUserHabitsApi = async (username, updatedHabits) => {
+    return await commonApi('PUT', `${serverurl}/alluserhabits/${username}`, updatedHabits);
+};
 
-//PATCH
-
-//DELETE
+//POST
+export const createActivityHistoryApi = async (reqBody) => {
+    return await commonApi('POST', `${serverurl}/alluserhistory`, reqBody);
+};
 
 //Blog component-cards
-
 export const getBlogDetailsApi = async () => {
     return await commonApi('GET' , `${serverurl}/blogs`,[])
-  }
+}
+
+export const fetchAllUserHistoryApi = async () => {
+    return await commonApi('GET', `${serverurl}/alluserhistory`);
+};
+
+export const updateAllUserHistoryApi = async (updatedUserHistoryObject) => {
+    return await commonApi('PUT', `${serverurl}/alluserhistory/${updatedUserHistoryObject.id}`, updatedUserHistoryObject);
+};
+
+export const createActivityApi = async (reqBody) => {
+    return await commonApi('POST', `${serverurl}/activities`, reqBody);
+};
+
+export const fetchAllActivitiesApi = async () => {
+    return await commonApi('GET', `${serverurl}/activities`);
+};

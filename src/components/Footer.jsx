@@ -18,6 +18,7 @@ function Footer() {
             <h1 className='text-3xl'>Linkes</h1>
             <Link to={'/'}><p className='mt-4'>Home</p></Link>
             <Link to={'/activity'}><p>Activity</p></Link>
+            <Link to={'/mgrid'}><p>mgrid</p></Link>
             <Link to={'/register'}><p>Register</p></Link>
           </div>
         </div>
