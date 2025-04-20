@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const NotFoundPage = () => {
+const PageNotFound = () => {
   const navigate = useNavigate();
 
   const goHome = () => {
@@ -14,16 +14,16 @@ const NotFoundPage = () => {
       flexDirection: 'column',
       justifyContent: 'center',
       alignItems: 'center',
-      height: '100vh',
+      height: '700px',
       textAlign: 'center',
       padding: '2rem',
     }}>
-      <img 
-        src="https://www.scopycode.com/includes/images/blog/404_error_page_not_found.gif" 
-        alt="404 Not Found" 
+      <img
+        src="https://www.scopycode.com/includes/images/blog/404_error_page_not_found.gif"
+        alt="404 Not Found"
         style={{ maxWidth: '90%', height: 'auto', marginBottom: '30px' }}
       />
-      <button 
+      <button
         onClick={goHome}
         style={{
           padding: '12px 24px',
@@ -45,4 +45,4 @@ const NotFoundPage = () => {
   );
 };
 
-export default NotFoundPage;
+export default PageNotFound;
