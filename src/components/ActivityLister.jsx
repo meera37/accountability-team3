@@ -48,7 +48,7 @@ function ActivityLister({ tab }) {
   const [show, setShow] = useState(false);
   const [activityName, setActivityName] = useState('');
   const [activityDescription, setActivityDescription] = useState('');
-  //const [activityDuration, setActivityDuration] = useState('');
+  const [activityDuration, setActivityDuration] = useState('');
   const [activityType, setActivityType] = useState('public');
   const [publicActivities, setPublicActivities] = useState([]);
   const [privateActivities, setPrivateActivities] = useState([]);
@@ -80,10 +80,10 @@ function ActivityLister({ tab }) {
       isValid = false;
     }
 
-    // if (!activityDuration) {
-    //   newErrors.activityDuration = '* Please select a duration';
-    //   isValid = false;
-    // }
+    if (!activityDuration) {
+      newErrors.activityDuration = '* Please select a duration';
+      isValid = false;
+    }
 
     setErrors(newErrors);
     return isValid;
@@ -101,7 +101,7 @@ function ActivityLister({ tab }) {
       const newActivity = {
         name: activityName,
         description: activityDescription,
-        //duration: activityDuration,
+        duration: activityDuration,
         type: activityType,
         author: curUser,
       };
@@ -270,7 +270,6 @@ function ActivityLister({ tab }) {
                   <Form.Text className="text-danger">{errors.activityDescription}</Form.Text>
                 )}
               </Form.Group>
-
 
               <Form.Group className="mb-3" controlId="activityDuration">
                 <Form.Label>Duration</Form.Label>
