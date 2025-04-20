@@ -39,7 +39,7 @@ function Cards() {
                       blogDetails?.length > 0 ?
                         blogDetails.map((item, idx) => (
                             <Col key={`blog-${idx}`} xs={12} sm={12} md={6} lg={4} className="mb-4 d-flex">
-                                <Card style={{ width: '100%' }} className="card h-100">
+                                <Card style={{ width: '100%' }} className="card h-100 shadow">
                                     <Card.Img
                                         variant="top"
                                         src="https://www.datocms-assets.com/47749/1681485390-ezgif-com-resize-11.png"
@@ -52,7 +52,7 @@ function Cards() {
                                                 { item.metaText }
                                             </Card.Text>
                                         </div>
-                                        <Button onClick={()=> {handleMore(item,idx+1)}} variant="" className="btn-outline-secondary">Know more</Button>
+                                        <Button onClick={()=> {handleMore(item,idx+1)}} variant="" className="btn-outline-secondary btn-sm w-50 mt-3">Know more</Button>
                                     </Card.Body>
                                 </Card>
                             </Col>

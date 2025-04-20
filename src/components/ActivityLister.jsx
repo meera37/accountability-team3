@@ -3,8 +3,7 @@ import SummaryCards from './SummaryCards'
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
-import { createActivityApi, createActivityHistoryApi, fetchAllActivitiesApi, fetchAllUserHistoryApi } from '../services/allApi';
-import { fetchSingleUserApi, updateAllUserHistoryApi, updateUserHabitsApi } from '../services/allApi';
+import {  fetchAllActivitiesApi, fetchSingleUserApi , updateUserHabitsApi, patchHistoryApi  } from '../services/allApi';
 
 function ActivityLister({ tab }) {
 
@@ -12,14 +11,9 @@ function ActivityLister({ tab }) {
     let curUser = localStorage.getItem('curUser')
     // console.log({curUser})
     fetchdata(curUser)
-    fetchActivities()
+    // fetchActivities()
   }, [])
 
-  //  const fetchdata = async (curUser) => {
-  //     const request = await fetchSingleUserApi(curUser)
-  //     const data = request.data;
-  //     console.log(data)
-  //  }
   const fetchdata = async (curUser) => {
     try {
       const request = await fetchSingleUserApi(curUser);
@@ -98,7 +92,12 @@ function ActivityLister({ tab }) {
   const handleCreateActivity = async () => {
     const curUser = localStorage.getItem('curUser');
 
-    if (validateForm()) {
+    if (!validateForm()){
+       console.log('error')
+       // TODO toastify error popup
+       return;
+    }
+
       const newActivity = {
         name: activityName,
         description: activityDescription,
@@ -106,12 +105,32 @@ function ActivityLister({ tab }) {
         type: activityType,
         author: curUser,
       };
-      try {
-        const response = await createActivityApi(newActivity);
-        console.log("Activity added successfully:", response);
-      } catch (error) {
-        console.error("Error adding activity:", error);
+
+      const request = await fetchSingleUserApi(curUser);
+      const userData = request.data;
+
+      const updatedUserData = { ...userData , [activityType]: [ activityName, ...userData[activityType] ]  }
+      // console.log({updatedUserData})
+
+      try{
+        const response = await updateUserHabitsApi(updatedUserData);
+        console.log(response.data)
+      }catch(error){
+        console.log(error)
       }
+
+      const update_history =  {
+        type: activityType ,
+        description: activityDescription,
+        startDate: new Date().toISOString().slice(0, 10),
+        endDate: "never",
+        options: { "intensityScale": [ 0,1,2,3,4,5] },
+        history: []
+     }
+      //history: (activityDuration != '365')? []:{ "2025": [] },
+
+      const updateHistoryResponse = await patchHistoryApi({id:curUser, [newActivity.name]: update_history });
+      console.log(updateHistoryResponse.data)
 
       const currentUserHabits = {
         core: [...allActivities.filter(act => act.type === 'core').map(act => act.name)],
@@ -130,71 +149,18 @@ function ActivityLister({ tab }) {
         setPrivateActivities([...privateActivities, newActivity]);
       }
 
-      try {
-        const habitsResponse = await updateUserHabitsApi(curUser, currentUserHabits);
-        console.log("Habits updated successfully:", habitsResponse.data);
+      setActivityName('');
+      setActivityDescription('');
+      setActivityDuration('');
+      setActivityType('public');
+      setErrors({});
+      handleClose();
 
-        const allHistoryResponse = await fetchAllUserHistoryApi();
-        const allHistoryData = allHistoryResponse.data;
-
-        const historyUpdate = {
-          [newActivity.name]: {
-            type: newActivity.type,
-            startDate: new Date().toISOString().slice(0, 10),
-            endDate: 'never',
-            options: {
-              "intensityScale": [
-                0,
-                1,
-                2,
-                3,
-                4,
-                5
-              ]
-            },
-            history: {
-              "2025": []
-            },
-          },
-        };
-
-        const userHistoryObject = allHistoryData.find(history => history.id === curUser);
-
-        if (userHistoryObject) {
-
-          const updatedHistory = {
-            ...userHistoryObject.history,
-            ...historyUpdate,
-          };
-          const updatedUserHistoryObject = { id: curUser, history: updatedHistory };
-          const updateHistoryResponse = await updateAllUserHistoryApi(updatedUserHistoryObject);
-          console.log("History updated successfully:", updateHistoryResponse.data);
-        } else {
-
-          const newUserHistoryObject = {
-            id: curUser,
-            history: historyUpdate,
-          };
-          const createNewHistoryResponse = await createActivityHistoryApi(newUserHistoryObject);
-          console.log("New history created successfully:", createNewHistoryResponse.data);
-        }
-
-        setActivityName('');
-        setActivityDescription('');
-        setActivityDuration('');
-        setActivityType('public');
-        setErrors({});
-        handleClose();
-      } catch (error) {
-        console.error("Error updating data:", error);
-      }
-    }
-  };
+    };
 
   const filteredAllActivities = allActivities.filter(activity =>
     activity.name.toLowerCase().includes(search.toLowerCase())
   );
-
 
   const filteredPublicActivities = publicActivities.filter(activity =>
     activity.name.toLowerCase().includes(search.toLowerCase())
@@ -215,7 +181,7 @@ function ActivityLister({ tab }) {
 
   return (
     <>
-      <div className="p-4 pt-0 space-y-6">
+      <div aria-hidden={ tab !='dashboard'} className={`p-4 pt-0 space-y-6 ${tab=='dashboard'? 'block':'hidden' }`}>
 
         <div className=''>
           <div className='d-flex justify-content-center'>
@@ -228,7 +194,6 @@ function ActivityLister({ tab }) {
         <SummaryCards />
 
         <div className="flex justify-center items-center gap-3 flex-wrap">
-
           <div className="relative w-[300px] sm:w-[400px]">
             <input
               type="text"
@@ -249,7 +214,6 @@ function ActivityLister({ tab }) {
               </button>
             )}
           </div>
-
 
           <button
             onClick={handleOpen}
@@ -280,7 +244,6 @@ function ActivityLister({ tab }) {
                 )}
               </Form.Group>
 
-
               <Form.Group className="mb-3" controlId="activityDescription">
                 <Form.Label>Description</Form.Label>
                 <Form.Control
@@ -295,12 +258,12 @@ function ActivityLister({ tab }) {
                 )}
               </Form.Group>
 
-
               <Form.Group className="mb-3" controlId="activityDuration">
                 <Form.Label>Duration</Form.Label>
                 <Form.Control
                   as="select"
-                  value={activityDuration}
+                  value={activityDuration
+                  }
                   onChange={(e) => setActivityDuration(e.target.value)}
                 >
                   <option value="">Select Duration (days)</option>
@@ -308,6 +271,7 @@ function ActivityLister({ tab }) {
                   <option value="30">30</option>
                   <option value="45">45</option>
                   <option value="60">60</option>
+                  <option value="365">lifeTime</option>
                 </Form.Control>
                 {errors.activityDuration && (
                   <Form.Text className="text-danger">{errors.activityDuration}</Form.Text>
@@ -371,7 +335,8 @@ function ActivityLister({ tab }) {
                     </tr>
                   </thead>
                   <tbody>
-                    {filteredAllActivities.map((activity, idx) => (
+                    {
+                     filteredAllActivities.map((activity, idx) => (
                       <tr key={idx} className="border-b">
                         <td className="px-4 py-2 text-gray-700 text-sm">{activity.name}</td>
                         <td className="px-4 py-2 text-gray-700 text-sm">by {activity.curUser}</td>
@@ -391,8 +356,8 @@ function ActivityLister({ tab }) {
                           {activity.type.charAt(0).toUpperCase() + activity.type.slice(1)}
                         </td>
                         <td className="px-4 py-2 text-center">
-                          <button className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 text-sm">
-                            Delete
+                          <button className="bg-green-500 text-white px-2 py-1 rounded hover:bg-red-600 text-sm">
+                            Archive
                           </button>
                         </td>
                       </tr>
@@ -439,8 +404,8 @@ function ActivityLister({ tab }) {
                       </td>
                       <td className="px-4 py-2 text-center text-gray-700 text-sm">Public</td>
                       <td className="px-4 py-2 text-center">
-                        <button className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 text-sm">
-                          Delete
+                        <button className="bg-green-500 text-white px-2 py-1 rounded hover:bg-red-600 text-sm">
+                            Archive
                         </button>
                       </td>
                     </tr>
@@ -487,8 +452,8 @@ function ActivityLister({ tab }) {
                       </td>
                       <td className="px-4 py-2 text-center text-gray-700 text-sm">Private</td>
                       <td className="px-4 py-2 text-center">
-                        <button className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 text-sm">
-                          Delete
+                        <button className="bg-green-500 text-white px-2 py-1 rounded hover:bg-red-600 text-sm">
+                          Archive
                         </button>
                       </td>
                     </tr>

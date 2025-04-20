@@ -13,10 +13,10 @@ function Header() {
 
   const header_links = {
     'Home': 'home',
-    'feactures': 'feacture',
+    'features': 'feature',
     'about': 'about',
+    'blog': 'blogs',
     'contact': 'contact',
-    // English
   }
   return (
 

@@ -27,8 +27,8 @@ export const fetchSingleUserApi = async(user) => {
 };
 
 //PUT   (update user habits)
-export const updateUserHabitsApi = async (username, updatedHabits) => {
-    return await commonApi('PUT', `${serverurl}/alluserhabits/${username}`, updatedHabits);
+export const updateUserHabitsApi = async (reqBody) => {
+    return await commonApi('PUT', `${serverurl}/alluserhabits/${reqBody.id}`,reqBody);
 };
 
 //POST
@@ -37,17 +37,27 @@ export const createActivityHistoryApi = async (reqBody) => {
 };
 
 //Blog component-cards
-export const getBlogDetailsApi = async (id) => {
+export const getBlogDetailsApi = async () => {
     return await commonApi('GET' , `${serverurl}/blogs`,[])
 }
 
-export const fetchAllUserHistoryApi = async () => {
+export const fetchAllUserHistoryApi = async (username) => {
+    if (username){
+        console.log(username)
+        return await commonApi('GET', `${serverurl}/alluserhistory/${username}`);
+    }
+    console.log('fetch all history')
     return await commonApi('GET', `${serverurl}/alluserhistory`);
 };
 
-export const updateAllUserHistoryApi = async (updatedUserHistoryObject) => {
-    return await commonApi('PUT', `${serverurl}/alluserhistory/${updatedUserHistoryObject.id}`, updatedUserHistoryObject);
+export const updateAllUserHistoryApi = async (reqBody) => {
+    return await commonApi('PUT', `${serverurl}/alluserhistory/${reqBody.id}`, reqBody);
 };
+
+//PATCH Activity history
+export const patchHistoryApi  = async (reqBody) => {
+    return await commonApi('PATCH', `${serverurl}/alluserhistory/${reqBody.id}`, reqBody)
+}
 
 export const createActivityApi = async (reqBody) => {
     return await commonApi('POST', `${serverurl}/activities`, reqBody);
@@ -56,3 +66,8 @@ export const createActivityApi = async (reqBody) => {
 export const fetchAllActivitiesApi = async () => {
     return await commonApi('GET', `${serverurl}/activities`);
 };
+
+export const createUserApi = async(reqBody) => {
+	return await commonApi('POST' , `${serverurl}/` , reqBody);
+};
+

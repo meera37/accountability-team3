@@ -176,27 +176,36 @@ img.rounded:hover {
     }
 }
 
-.team-card {
-    background: linear-gradient(135deg, #dad5df, hsla(107, 53%, 10%, 0.906));
-    padding: 1.5rem;
-    border-radius: 1.5rem;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+
+
+
+
+
+
+
+.testimonial-card {
+    animation: fadeInUp 0.7s ease;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    color: rgb(11, 11, 11);
-}
-
-.team-card:hover {
-    transform: translateY(-10px) scale(1.02);
-    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3);
-    cursor: pointer;
-}
-
-.team-card h5 {
-    font-size: 1.3rem;
-    margin-bottom: 0.3rem;
-}
-
-.team-card p {
-    font-size: 0.95rem;
-    margin-bottom: 0.4rem;
-}
+    min-height: auto;
+  }
+  
+  .testimonial-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+  }
+  
+  .testimonial-avatar {
+    transition: transform 0.3s ease;
+  }
+  
+  .testimonial-avatar:hover {
+    transform: scale(1.04);
+  }
+  
+  .testimonial-text {
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #444;
+    max-width: 90%;
+  }
+  
