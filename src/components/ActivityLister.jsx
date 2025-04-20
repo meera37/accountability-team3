@@ -48,7 +48,7 @@ function ActivityLister({ tab }) {
   const [show, setShow] = useState(false);
   const [activityName, setActivityName] = useState('');
   const [activityDescription, setActivityDescription] = useState('');
-  const [activityDuration, setActivityDuration] = useState('');
+  //const [activityDuration, setActivityDuration] = useState('');
   const [activityType, setActivityType] = useState('public');
   const [publicActivities, setPublicActivities] = useState([]);
   const [privateActivities, setPrivateActivities] = useState([]);
@@ -80,10 +80,10 @@ function ActivityLister({ tab }) {
       isValid = false;
     }
 
-    if (!activityDuration) {
-      newErrors.activityDuration = '* Please select a duration';
-      isValid = false;
-    }
+    // if (!activityDuration) {
+    //   newErrors.activityDuration = '* Please select a duration';
+    //   isValid = false;
+    // }
 
     setErrors(newErrors);
     return isValid;
@@ -101,7 +101,7 @@ function ActivityLister({ tab }) {
       const newActivity = {
         name: activityName,
         description: activityDescription,
-        duration: activityDuration,
+        //duration: activityDuration,
         type: activityType,
         author: curUser,
       };
@@ -187,8 +187,12 @@ function ActivityLister({ tab }) {
           <img className="rounded-circle shadow-4-strong " width={100} alt="avatar2" src="https://mdbcdn.b-cdn.net/img/new/avatars/1.webp"  />
           <h1 className='pt-4 pe-3'>Hi  i am </h1>
         </div>
-
-        <SummaryCards />
+        
+        <SummaryCards 
+        total={allActivities.length}
+        puCount={publicActivities.length}
+        prCount={privateActivities.length}
+        />
 
         <div className="flex justify-center items-center gap-3 flex-wrap">
           <div className="relative w-[300px] sm:w-[400px]">
@@ -197,7 +201,7 @@ function ActivityLister({ tab }) {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search Activities"
-              className="w-full border border-gray-300 rounded-full px-4 pr-10 py-2 text-sm text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full border-2 border-gray-400 rounded-full px-4 pr-10 py-2 text-sm text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-0"
             />
             {
              search &&
@@ -207,15 +211,27 @@ function ActivityLister({ tab }) {
                 className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 text-sm"
                 aria-label="Clear search"
               >
-                ×
+                x
               </button>
             )}
           </div>
 
           <button
             onClick={handleOpen}
-            className="bg-blue-600 text-white px-4 py-2 rounded-full hover:bg-blue-700 transition text-sm"
-          >
+            // className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition text-sm"
+            style={{
+              backgroundColor: 'darkcyan',
+              color: 'white',
+              padding: '8px 16px',
+              borderRadius: '8px',
+              transition: 'background-color 0.3s ease',
+              fontSize: '0.875rem', 
+              cursor: 'pointer', 
+              border: 'none', 
+            }}
+            onMouseOver={(e) => (e.currentTarget.style.backgroundColor = 'teal')}
+            onMouseOut={(e) => (e.currentTarget.style.backgroundColor = 'darkcyan')}
+         >
             Add Activity
           </button>
         </div>
@@ -255,6 +271,7 @@ function ActivityLister({ tab }) {
                 )}
               </Form.Group>
 
+
               <Form.Group className="mb-3" controlId="activityDuration">
                 <Form.Label>Duration</Form.Label>
                 <Form.Control
@@ -273,7 +290,7 @@ function ActivityLister({ tab }) {
                 {errors.activityDuration && (
                   <Form.Text className="text-danger">{errors.activityDuration}</Form.Text>
                 )}
-              </Form.Group>
+              </Form.Group> 
 
 
               <Form.Group className="mb-3" controlId="activityType">
@@ -320,7 +337,7 @@ function ActivityLister({ tab }) {
             filteredAllActivities.length === 0 ? (
               <p>No activities yet</p>
             ) : (
-              <div className="overflow-x-auto">
+              <div className="overflow-x-auto max-h-96 overflow-y-auto">
                 <table className="w-full table-auto">
                   <thead className="bg-gray-100">
                     <tr>
@@ -371,7 +388,7 @@ function ActivityLister({ tab }) {
            filteredPublicActivities.length === 0 ? (
             <p>No public activities yet</p>
           ) : (
-            <div className="overflow-x-auto">
+            <div className="overflow-x-auto max-h-96 overflow-y-auto">
               <table className="w-full table-auto">
                 <thead className="bg-gray-100">
                   <tr>
@@ -418,7 +435,7 @@ function ActivityLister({ tab }) {
           {filteredPrivateActivities.length === 0 ? (
             <p>No private activities yet</p>
           ) : (
-            <div className="overflow-x-auto">
+            <div className="overflow-x-auto max-h-96 overflow-y-auto">
               <table className="w-full table-auto">
                 <thead className="bg-gray-100">
                   <tr>
