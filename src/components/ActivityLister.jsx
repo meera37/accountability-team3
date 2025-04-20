@@ -217,11 +217,14 @@ function ActivityLister({ tab }) {
     <>
       <div className="p-4 pt-0 space-y-6">
 
-        <div className='d-flex flex-row-reverse'>
-          <img class="rounded-circle shadow-4-strong " width={100} alt="avatar2" src="https://mdbcdn.b-cdn.net/img/new/avatars/1.webp"  />
-          <h1 className='pt-4 pe-3'>Hi  i am </h1>
+        <div className=''>
+          <div className='d-flex justify-content-center'>
+            {/* <img class="rounded-circle shadow-4-strong " width={100} alt="avatar2" src="https://mdbcdn.b-cdn.net/img/new/avatars/1.webp"  /> */}
+            <img class="rounded-circle shadow-4-strong " width={80}  alt="avatar2" src="https://api.dicebear.com/9.x/adventurer/svg?seed=Aidan" />
+          </div>
+          <div className='d-flex justify-content-center'><h1>_aswriya_ka</h1></div>
+  
         </div>
-
         <SummaryCards />
 
         <div className="flex justify-center items-center gap-3 flex-wrap">
@@ -250,7 +253,7 @@ function ActivityLister({ tab }) {
 
           <button
             onClick={handleOpen}
-            className="bg-blue-600 text-white px-4 py-2 rounded-full hover:bg-blue-700 transition text-sm"
+            className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition text-sm "
           >
             Add Activity
           </button>

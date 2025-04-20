@@ -49,7 +49,7 @@ function Header() {
            
            <div className='d-flex flex-row-reverse'>
             {/* free avatar api - https://www.dicebear.com/playground/ */}
-          <img class="rounded-circle shadow-4-strong " width={60} height={50} alt="avatar2" src="https://api.dicebear.com/9.x/adventurer/svg?seed=Aidan" />
+          <img className="rounded-circle shadow-4-strong " width={60} height={50} alt="avatar2" src="https://api.dicebear.com/9.x/adventurer/svg?seed=Aidan" />
           <p className='mt-3 me-1 text-bold'>Hello, {currentUser}</p>
         </div>
         )

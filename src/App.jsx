@@ -13,6 +13,7 @@ import Mgrid from './components/Mgrid';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css'
 import { useNavigate  } from 'react-router-dom';
+import Explore from './components/Explore';
 
 function App() {
   const navigate = useNavigate();
@@ -47,6 +48,7 @@ function App() {
             <Route path={'/activity'} element={<Activity/>} />
             <Route path={'/dashboard'} element={<DashBoard/>} />
             <Route path={'/mgrid'} element={<Mgrid/>} />
+            <Route path={'/explore'} element={<Explore/>} />
 
         </Routes>
 
