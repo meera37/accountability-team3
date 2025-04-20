@@ -35,17 +35,18 @@ function Grid() {
 
     }
 
-    const days = [31,28,31,30,31,30,31,30,31,30,31,30,31,]
+    const days = [31, ((year % 400 === 0) || (year % 4 === 0 && year % 100 !== 0)) ? 29 : 28, 31,30,31,30,31,30,31,30,31,30,31];
+
     const months =['January','February','March','April','May','June','July','August','September','October','November','December'];
     const indices = new Array(31).fill(1);
 
     const handleChange = (val) => {
       setYear(val)
-      if ((val % 400 == 0) || (val % 4 == 0 && (val % 100 != 0))){
-        days[1] = 29;
-      }else{
-        days[1] = 28;
-      }
+      // if ((val % 400 == 0) || (val % 4 == 0 && (val % 100 != 0))){
+      //   days[1] = 29;
+      // }else{
+      //   days[1] = 28;
+      // }
       console.log(days)
     }
 
