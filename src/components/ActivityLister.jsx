@@ -186,12 +186,15 @@ function ActivityLister({ tab }) {
   return (
     <>
       <div aria-hidden={tab != 'dashboard'} className={`p-4 pt-0 space-y-6 ${tab == 'dashboard' ? 'block' : 'hidden'}`}>
-
-        <div className='d-flex flex-row-reverse'>
-          <img className="rounded-circle shadow-4-strong " width={100} alt="avatar2" src="https://mdbcdn.b-cdn.net/img/new/avatars/1.webp" />
-          <h1 className='pt-4 pe-3'>Hi  i am </h1>
+      
+        <div className=''>
+            <div className='d-flex flex-row-reverse'>
+              <img class="rounded-circle shadow-4-strong " width={80}  alt="avatar2" src="https://api.dicebear.com/9.x/adventurer/svg?seed=Aidan" />
+            </div>
+            <div className='d-flex justify-content-center'>
+                <h1>_aswriya_ka</h1>
+            </div>
         </div>
-
         <SummaryCards
           total={allActivities.length}
           puCount={publicActivities.length}
@@ -235,6 +238,7 @@ function ActivityLister({ tab }) {
             }}
             onMouseOver={(e) => (e.currentTarget.style.backgroundColor = 'teal')}
             onMouseOut={(e) => (e.currentTarget.style.backgroundColor = 'darkcyan')}
+            className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition text-sm "
           >
             Add Activity
           </button>
