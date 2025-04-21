@@ -1,9 +1,8 @@
 import React from 'react'
 import { Col, Row } from 'react-bootstrap'
-import { useParams, useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 
 function BlogDetail({ }) {
-    const { blogslug } = useParams();
     const location = useLocation();
     // const {title, text} = state ;
     const { item } = location.state || {};
@@ -13,33 +12,25 @@ function BlogDetail({ }) {
     return (
         <>
             <div className=" lg:w-7/12 mx-auto px-[30px] my-5" >
-                <Row className="text-center mb-4">
-                    <Col>
+                <Row className="text-center justify-content-center mb-4">
+                    <Col xs={12}  className="mb-4" >
                         <h1>{title}</h1>
                     </Col>
-                </Row>
 
-                <Row className="justify-content-center mb-4">
-                    <Col xs={12} md={8} lg={8}>
+                    <Col xs={12} md={8} lg={8} className="mb-5">
                         <img
                             src={imgsrc}
                             alt="no image"
                         />
                     </Col>
-                </Row>
 
-
-                <Row className="mb-5">
-                    <Col>
+                    <Col xs={12}>
                         <p className="text-center" style={{ textAlign: 'justify', fontSize: 'clamp(1rem, 2vw, 1.4rem)' }} >
                             {londes}
                         </p>
                     </Col>
                 </Row>
-
-            </div>
-
-
+           </div>
         </>
     )
 }
