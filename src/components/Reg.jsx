@@ -6,7 +6,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
-import { getAllUsersApi, registerUserApi , createUserActivityApi , fetchSingleUserApi , createActivityHistoryApi } from  '../services/allApi';
+import { getAllUsersApi, registerUserApi , createUserActivityApi , createActivityHistoryApi } from  '../services/allApi';
 
 function Reg() {
     const [user, setUser] = useState("")
