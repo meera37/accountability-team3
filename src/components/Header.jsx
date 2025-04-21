@@ -20,13 +20,13 @@ function Header() {
   }
   return (
 
-    <header className="sg__header sticky top-0 bg-white shadow-md z-50">
+    <header className="sg__header sticky top-0 bg-white shadow-md z-50 pt-0">
       <div className="sg__container flex items-center justify-between w-full max-w-screen-xl mx-auto px-4">
 
         {/* Logo */}
         <Link to="/" className="!no-underline">
             <div className="logo flex items-center gap-3 w-full sm:w-auto">
-              <img src="./vite.svg" alt="brand logo" className="h-10 w-10" />
+              <img src="./clock.png" alt="brand logo" className="h-20 w-20" />
               <h1 className="text-xl font-semibold text-green-600">LookOut</h1>
             </div>
         </Link>
@@ -46,12 +46,11 @@ function Header() {
         {
          isUserLogged?
         (
-           
-           <div className='d-flex flex-row-reverse'>
+           <div className='d-flex align-center justify-center flex-row-reverse'>
             {/* free avatar api - https://www.dicebear.com/playground/ */}
-          <img className="rounded-circle shadow-4-strong " width={60} height={50} alt="avatar2" src="https://api.dicebear.com/9.x/adventurer/svg?seed=Aidan" />
-          <p className='mt-3 me-1 text-bold'>Hello, {currentUser}</p>
-        </div>
+              <img className="rounded-circle shadow-4-strong w-[40px] h-[40px] md:w-[80px] md:h-[80px]" alt="avatar2" src="https://api.dicebear.com/9.x/adventurer/svg?seed=Aidan" />
+              <p className='mt-3 me-1 text-bold'>Hello, {currentUser}</p>
+          </div>
         )
          :
         (
@@ -63,7 +62,7 @@ function Header() {
             <Link
               to={header_links[text]}
               key={`navigation${idx}`}
-              className="capitalize px-3 py-2 text-gray-700 hover:text-blue-600 nav-item block no-underline"
+              className="capitalize px-3 py-2 text-gray-700 hover:text-blue-600 nav-item block !no-underline"
               onClick={() => setmenuopen(false)}
             >
               {text}

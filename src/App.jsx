@@ -13,6 +13,8 @@ import Mgrid from './components/Mgrid';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css'
 import { useNavigate  } from 'react-router-dom';
+import Explore from './components/Explore';
+import PageNotFound from './pages/PageNotFound';
 
 function App() {
   const navigate = useNavigate();
@@ -40,23 +42,35 @@ function App() {
                 } />
 
             <Route
+                path={`/u/:username`}
+                element={ isUserLogged?
+                    <DashBoard/>
+                  :
+                  <Navigate to="/" />
+                  } />
+
+
+            <Route
                 path='/login'
                 element= { isUserLogged? <Navigate to='/dashboard' />: <Login /> }
                 />
 
             <Route path={'/blogs'} element={<Blog/>} />
             <Route path={'/blogs/:blogslug'} element={<BlogDetail/>} />
+            <Route path={'/dashboard'} element={<DashBoard/>} />
+
             <Route path='/login' element={<Login/>}/>
             <Route path='/register' element={<Register />} />
-            <Route path='/dashboard' element={<ActivityLister/>}/>
             <Route path={'/activity'} element={<Activity/>} />
-            <Route path={'/dashboard'} element={<DashBoard/>} />
+
+
+
             <Route path={'/mgrid'} element={<Mgrid/>} />
+            <Route path={'/explore'} element={<Explore/>} />
+            <Route path={'*'} element={<PageNotFound/>}/>
 
         </Routes>
-
       { !isUserLogged &&  <Footer />}
-
     </>
   )
 }

@@ -43,7 +43,7 @@ export const getBlogDetailsApi = async () => {
 
 export const fetchAllUserHistoryApi = async (username) => {
     if (username){
-        console.log(username)
+        // console.log(username)
         return await commonApi('GET', `${serverurl}/alluserhistory/${username}`);
     }
     console.log('fetch all history')
@@ -71,3 +71,7 @@ export const createUserApi = async(reqBody) => {
 	return await commonApi('POST' , `${serverurl}/` , reqBody);
 };
 
+//delete if unused
+export const addToUsernameApi = async(reqBody) => {
+    return await commonApi('PUT',`${serverurl}/usernames/`, reqBody)
+}

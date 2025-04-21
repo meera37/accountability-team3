@@ -3,14 +3,18 @@ import SummaryCards from './SummaryCards'
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
-import { fetchAllActivitiesApi, fetchSingleUserApi, updateUserHabitsApi, patchHistoryApi } from '../services/allApi';
+import { fetchAllActivitiesApi, fetchSingleUserApi, updateUserHabitsApi, fetchAllUserHistoryApi, patchHistoryApi } from '../services/allApi';
 import ActivityRow from './ActivityRow';
+import { useParams , useLocation , useNavigate } from 'react-router-dom'
 
-function ActivityLister({ tab }) {
+function ActivityLister({tab,userid}) {
 
   useEffect(() => {
-    let curUser = localStorage.getItem('curUser')
-    // console.log({curUser})
+    let curUser = userid || localStorage.getItem('curUser')
+    console.log({curUser})
+
+    setCurrentUser(curUser)
+
     fetchdata(curUser)
     // fetchActivities()
   }, [])
@@ -35,6 +39,8 @@ function ActivityLister({ tab }) {
         setPublicActivities([]);
         setPrivateActivities([]);
         setAllActivities([]);
+        //TODO developer not found 404page
+        // navigate('/dashboard');
       }
     } catch (error) {
       console.error("Error fetching user data:", error);
@@ -45,6 +51,11 @@ function ActivityLister({ tab }) {
   };
 
   // console.log(`Current tab ${tab}`)
+  const  urlpath  =  useLocation().pathname
+  const curUser = localStorage.getItem('curUser');
+  const loggedUser = localStorage.getItem('curUser')
+  const navigate = useNavigate();
+  const [currentUser , setCurrentUser] = useState('')
   const [search, setSearch] = useState('');
   const [show, setShow] = useState(false);
   const [activityName, setActivityName] = useState('');
@@ -58,6 +69,11 @@ function ActivityLister({ tab }) {
   const [selectedActivityDescription, setSelectedActivityDescription] = useState('');
   const [errors, setErrors] = useState({});
   const [descriptionLength, setDescriptionLength] = useState(15);
+
+  console.log(urlpath,currentUser, loggedUser)
+
+  // authorization condition
+  const authUser =  (currentUser == loggedUser)
 
   const handleOpen = () => setShow(true);
   const handleClose = () => setShow(false)
@@ -91,7 +107,6 @@ function ActivityLister({ tab }) {
   };
 
   const handleCreateActivity = async () => {
-    const curUser = localStorage.getItem('curUser');
 
     if (!validateForm()) {
       console.log('error')
@@ -180,25 +195,66 @@ function ActivityLister({ tab }) {
     }
   };
 
-  const handleAddTemplate = (activity) => {
-    //console.log(`Adding template for activity: ${activity.name} (ID: ${activity.id})`);
+  const handleAddTemplate = async (activity) => {
+    console.log(` ${loggedUser} Cloning template for activity: ${activity.name} from ${currentUser}`);
+
+
+
+
+    const response = await fetchAllUserHistoryApi(currentUser);
+    console.log(response.data)
+
+    const data = response.data
+
+    const key = "fishing" || activity.name ;
+
+    //todo find the difference between start date and todays date and fill the history with zeroes
+    let difference = 10
+    const clonedHabit = {
+               ...data[key],
+                author: currentUser,
+                startDate: new Date().toISOString().slice(0, 10),
+                history:[ ...new Array(difference).fill(0) , 1,2,5,4,6,7],
+              }
+
+    console.log(clonedHabit);
+
+    const selfHistory = await fetchAllUserHistoryApi(loggedUser);
+    const details = selfHistory.data
+
+    if(details.hasOwnProperty(key)){
+      console.log('habit already cloned toast error')
+    }else{
+      // add the cloned habit to our history
+      console.log('cloning in progress')
+      const resp = await patchHistoryApi({ id: loggedUser, [key]: clonedHabit })
+    }
+
   }
   return (
     <>
       <div aria-hidden={tab != 'dashboard'} className={`p-4 pt-0 space-y-6 ${tab == 'dashboard' ? 'block' : 'hidden'}`}>
 
-        <div className='d-flex flex-row-reverse'>
-          <img className="rounded-circle shadow-4-strong " width={100} alt="avatar2" src="https://mdbcdn.b-cdn.net/img/new/avatars/1.webp" />
-          <h1 className='pt-4 pe-3'>Hi  i am </h1>
+        <div className='mb-5'>
+            <div className='d-flex justify-center'>
+              <img className="rounded-circle w-[150px] h-[150px] shadow-4-strong " alt="avatar2" src="https://api.dicebear.com/9.x/adventurer/svg?seed=Aidan" />
+            </div>
+            <div className='d-flex justify-content-center'>
+                <h1>{ currentUser }</h1>
+            </div>
         </div>
 
-        <SummaryCards
-          total={allActivities.length}
-          puCount={publicActivities.length}
-          prCount={privateActivities.length}
-        />
+        {
+          ( (currentUser == loggedUser) || (urlpath=="/dashboard") )
+            &&
+              <SummaryCards
+              total={allActivities.length}
+              puCount={publicActivities.length}
+              prCount={privateActivities.length}
+            />
+        }
 
-        <div className="flex justify-center items-center gap-3 flex-wrap">
+        <div className="my-5 flex justify-center items-center gap-3 flex-wrap">
           <div className="relative w-[300px] sm:w-[400px]">
             <input
               type="text"
@@ -220,27 +276,26 @@ function ActivityLister({ tab }) {
               )}
           </div>
 
-          <button
-            onClick={handleOpen}
-            // className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition text-sm"
-            style={{
-              backgroundColor: 'darkcyan',
-              color: 'white',
-              padding: '8px 16px',
-              borderRadius: '8px',
-              transition: 'background-color 0.3s ease',
-              fontSize: '0.875rem',
-              cursor: 'pointer',
-              border: 'none',
-            }}
-            onMouseOver={(e) => (e.currentTarget.style.backgroundColor = 'teal')}
-            onMouseOut={(e) => (e.currentTarget.style.backgroundColor = 'darkcyan')}
-          >
+          {
+            authUser
+             &&
+            <button
+              onClick={handleOpen}
+              // className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition text-sm"
+              style={{
+                backgroundColor: 'darkcyan',color: 'white', padding: '8px 16px', borderRadius: '8px',
+                 transition: 'background-color 0.3s ease', fontSize: '0.875rem', cursor: 'pointer', border: 'none',}}
+              onMouseOver={(e) => (e.currentTarget.style.backgroundColor = 'teal')}
+              onMouseOut={(e) => (e.currentTarget.style.backgroundColor = 'darkcyan')}
+              className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition text-sm "
+           >
             Add Activity
-          </button>
+           </button>
+          }
+
         </div>
 
-        <h2 className="text-lg font-semibold text-gray-800 text-center mt-5 mb-3">List of Activities</h2>
+        <h2 className="my-5 text-lg font-semibold text-gray-800 text-center">List of Activities</h2>
         <Modal show={show} onHide={handleClose} centered>
           <Modal.Header closeButton>
             <Modal.Title>Add New Activity</Modal.Title>
@@ -334,110 +389,125 @@ function ActivityLister({ tab }) {
           </Modal.Footer>
         </Modal>
 
-        <div className="bg-white rounded shadow p-4 mb-4">
-          <h4 className="mb-2 font-semibold text-gray-800">All Activities</h4>
-          {
-            filteredAllActivities.length === 0 ? (
-              <p>No activities yet</p>
-            ) : (
-              <div className="overflow-x-auto max-h-96 overflow-y-auto">
-                <table className="w-full table-auto">
-                  <thead className="bg-gray-100">
-                    <tr>
-                      <th className="px-4 py-2 text-left text-gray-600 text-sm font-semibold">Activity Name</th>
-                      <th className="px-4 py-2 text-left text-gray-600 text-sm font-semibold">Creator</th>
-                      <th className="px-4 py-2 text-center text-gray-600 text-sm font-semibold">Description</th>
-                      <th className="px-4 py-2 text-center text-gray-600 text-sm font-semibold">Type</th>
-                      <th className="px-4 py-2 text-center text-gray-600 text-sm font-semibold">Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {
-                      filteredAllActivities.map((activity, idx) => (
+        {
+        /*{ all activities list } */
+          authUser  &&
+          <div className="bg-white rounded shadow p-4 mb-4">
+            <h4 className="mb-2 font-semibold text-gray-800">All Activities</h4>
+            {
+              filteredAllActivities.length === 0 ? (
+                <p>No activities yet</p>
+              ) : (
+                <div className="overflow-x-auto max-h-96 overflow-y-auto">
+                  <table className="w-full table-auto">
+                    <thead className="bg-gray-100">
+                      <tr>
+                        <th className="px-4 py-2 text-left text-gray-600 text-sm font-semibold">Activity Name</th>
+                        <th className="px-4 py-2 text-left text-gray-600 text-sm font-semibold">Creator</th>
+                        <th className="px-4 py-2 text-center text-gray-600 text-sm font-semibold">Description</th>
+                        <th className="px-4 py-2 text-center text-gray-600 text-sm font-semibold">Activity Type</th>
+                        <th className="px-4 py-2 text-center text-gray-600 text-sm font-semibold">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {
+                        filteredAllActivities.map((activity, idx) => (
+                          <ActivityRow
+                            key={idx}
+                            activity={activity}
+                            idx={idx}
+                            handleOpenDescriptionModal={handleOpenDescriptionModal}
+                            descriptionLength={descriptionLength}
+                            isPublicSection={false}
+                            typeCol={true}
+                            onAddTemplate={handleAddTemplate}
+                          />
+                        ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+          </div>
+        }
+
+        {
+          /*{ public activities  } */
+          <div className="bg-white rounded shadow p-4 mb-4">
+            <h4 className="mb-2 font-semibold text-gray-800">Public Activities</h4>
+            {
+              filteredPublicActivities.length === 0 ? (
+                <p>No public activities yet</p>
+              ) : (
+                <div className="overflow-x-auto max-h-96 overflow-y-auto">
+                  <table className="w-full table-auto">
+                    <thead className="bg-gray-100">
+                      <tr>
+                        <th className="px-4 py-2 text-left text-gray-600 text-sm font-semibold">Activity Name</th>
+                        <th className="px-4 py-2 text-left text-gray-600 text-sm font-semibold">Creator</th>
+                        <th className="px-4 py-2 text-center text-gray-600 text-sm font-semibold">Description</th>
+                        {/* <th className="px-4 py-2 text-center text-gray-600 text-sm font-semibold">Type</th> */}
+                        <th className="px-4 py-2 text-center text-gray-600 text-sm font-semibold">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {filteredPublicActivities.map((activity, idx) => (
                         <ActivityRow
-                          key={idx}
-                          activity={activity}
-                          idx={idx}
-                          handleOpenDescriptionModal={handleOpenDescriptionModal}
-                          descriptionLength={descriptionLength}
-                          isPublicSection={false}
-                          onAddTemplate={handleAddTemplate}
-                        />
+                        key={idx}
+                        activity={activity}
+                        idx={idx}
+                        handleOpenDescriptionModal={handleOpenDescriptionModal}
+                        descriptionLength={descriptionLength}
+                        isPublicSection={true}
+                        typeCol={false}
+                        onAddTemplate={ handleAddTemplate}
+                        authUser={authUser}
+                      />
                       ))}
-                  </tbody>
-                </table>
-              </div>
-            )}
-        </div>
+                    </tbody>
+                  </table>
+                </div>
+              )}
+          </div>
+        }
 
-        <div className="bg-white rounded shadow p-4 mb-4">
-          <h4 className="mb-2 font-semibold text-gray-800">Public Activities</h4>
-          {
-            filteredPublicActivities.length === 0 ? (
-              <p>No public activities yet</p>
-            ) : (
-              <div className="overflow-x-auto max-h-96 overflow-y-auto">
-                <table className="w-full table-auto">
-                  <thead className="bg-gray-100">
-                    <tr>
-                      <th className="px-4 py-2 text-left text-gray-600 text-sm font-semibold">Activity Name</th>
-                      <th className="px-4 py-2 text-left text-gray-600 text-sm font-semibold">Creator</th>
-                      <th className="px-4 py-2 text-center text-gray-600 text-sm font-semibold">Description</th>
-                      <th className="px-4 py-2 text-center text-gray-600 text-sm font-semibold">Public</th>
-                      <th className="px-4 py-2 text-center text-gray-600 text-sm font-semibold">Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {filteredPublicActivities.map((activity, idx) => (
-                       <ActivityRow
-                       key={idx}
-                       activity={activity}
-                       idx={idx}
-                       handleOpenDescriptionModal={handleOpenDescriptionModal}
-                       descriptionLength={descriptionLength}
-                       isPublicSection={true}
-                       onAddTemplate={handleAddTemplate}
-                     />
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            )}
-        </div>
-
-        <div className="bg-white rounded shadow p-4">
-          <h4 className="mb-2 font-semibold text-gray-800">Private Activities</h4>
-          {filteredPrivateActivities.length === 0 ? (
-            <p>No private activities yet</p>
-          ) : (
-            <div className="overflow-x-auto max-h-96 overflow-y-auto">
-              <table className="w-full table-auto">
-                <thead className="bg-gray-100">
-                  <tr>
-                    <th className="px-4 py-2 text-left text-gray-600 text-sm font-semibold">Activity Name</th>
-                    <th className="px-4 py-2 text-left text-gray-600 text-sm font-semibold">Creater</th>
-                    <th className="px-4 py-2 text-center text-gray-600 text-sm font-semibold">Description</th>
-                    <th className="px-4 py-2 text-center text-gray-600 text-sm font-semibold">Private</th>
-                    <th className="px-4 py-2 text-center text-gray-600 text-sm font-semibold">Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {filteredPrivateActivities.map((activity, idx) => (
-                    <ActivityRow
-                    key={idx}
-                    activity={activity}
-                    idx={idx}
-                    handleOpenDescriptionModal={handleOpenDescriptionModal}
-                    descriptionLength={descriptionLength}
-                    isPublicSection={false}
-                    onAddTemplate={handleAddTemplate}
-                  />
-                  ))}
-                </tbody>
-              </table>
+        {
+          // private activities
+         authUser &&
+            <div className="bg-white rounded shadow p-4">
+              <h4 className="mb-2 font-semibold text-gray-800">Private Activities</h4>
+              {filteredPrivateActivities.length === 0 ? (
+                <p>No private activities yet</p>
+              ) : (
+                <div className="overflow-x-auto max-h-96 overflow-y-auto">
+                  <table className="w-full table-auto">
+                    <thead className="bg-gray-100">
+                      <tr>
+                        <th className="px-4 py-2 text-left text-gray-600 text-sm font-semibold">Activity Name</th>
+                        <th className="px-4 py-2 text-left text-gray-600 text-sm font-semibold">Creater</th>
+                        <th className="px-4 py-2 text-center text-gray-600 text-sm font-semibold">Description</th>
+                        {/* <th className="px-4 py-2 text-center text-gray-600 text-sm font-semibold">Private</th> */}
+                        <th className="px-4 py-2 text-center text-gray-600 text-sm font-semibold">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {filteredPrivateActivities.map((activity, idx) => (
+                        <ActivityRow
+                        key={idx}
+                        activity={activity}
+                        idx={idx}
+                        handleOpenDescriptionModal={handleOpenDescriptionModal}
+                        descriptionLength={descriptionLength}
+                        isPublicSection={false}
+                        typeCol={false}
+                        onAddTemplate={handleAddTemplate}
+                      />
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
             </div>
-          )}
-        </div>
+        }
 
       </div>
     </>
