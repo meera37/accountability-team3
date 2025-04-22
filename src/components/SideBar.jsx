@@ -1,26 +1,24 @@
 import { faGlobe, faHouseUser, faRightFromBracket,faBell  } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate  } from 'react-router-dom'
 
 
 function SideBar({setTab}) {
 const navigate = useNavigate()
 
 const handleLogout = () => {
-
   localStorage.setItem('userLogged', JSON.stringify(false))
   localStorage.setItem('curUser','')
-  console.log('navigate')
   navigate('/login')
 }
-
 
     return (
         <>
             <ul className='text-muted mt-4 flex flex-row flex-md-column list-unstyled md:!stick md:top-[100px] justify-between'>
                 <li className='mt-3 '>
-                <Link onClick={()=> {setTab('dashboard')}} className=" flex flex-col md:flex-row items-center text-black" to={'/dashboard'}
+                <Link onClick={()=> {setTab('dashboard')}} className=" flex flex-col md:flex-row items-center text-black"
+                // to={'/dashboard'}
                 style={{textDecoration: 'none'}}>
                     <FontAwesomeIcon icon={faHouseUser} className='me-2 ms-3' />Dashboard
                 </Link>

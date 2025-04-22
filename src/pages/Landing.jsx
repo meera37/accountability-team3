@@ -60,7 +60,7 @@ function Landing() {
               <Container className="bg-amber-400 shadow rounded p-4">
                 <div className='hero-text border border-black p-3 shadow'>
                   <h1 className="text-black fw-bold display-5 display-md-3">
-                    Your Accountability Partner Awaits
+                    Your Accountability Partner Awaits jbcsdjbvcjsdbvcksb
                   </h1>
                   <p className="text-muted fw-bold mt-3 fs-6 fs-md-5">
                     Connect with people who share your goals, stay motivated together, and build powerful habits that last — one connection at a time.
