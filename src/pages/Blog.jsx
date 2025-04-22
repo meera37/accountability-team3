@@ -11,7 +11,7 @@ function Blog() {
         <>
             <Container className="d-flex justify-content-center align-items-center flex-column">
 
-                <h1 className='mt-5 mb-5 text-center'>Blog - Accountability</h1>
+                <h1 className='mt-5 mb-5 text-center fw-bold'>Blogs</h1>
 
                 <Card />
 
