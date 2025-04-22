@@ -4,17 +4,13 @@
   /*  font-family: "Caveat", cursive; */
 
   /* font-family: "Mogra", system-ui; */
-  font-family: "Mogra", system-ui;
+  /* font-family: "Mogra", system-ui; */
+  font-family: "PT Serif", serif;
   margin: 0px;
   padding: 0px;
-  /* box-sizing: border-box; */
 }
 
-/* Remove x overflow from root */
-/* html, body {
-  overflow-x: hidden;
-  width: 100%;
-} */
+
 
 
 .markinput {
