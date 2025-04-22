@@ -9,8 +9,51 @@ import { faNoteSticky } from '@fortawesome/free-solid-svg-icons/faNoteSticky';
 function Landing() {
   return (
     <>
+
+      {/* Hero-section */}
+      <div style={{ maxWidth: '100vw', overflowX: 'hidden' }}>
+        <Container className="mb-5 px-4  bg-amber-100 py-5 mt-3 shadow rounded">
+          <Row className="gx-4 gy-5 justify-content-center align-items-center">
+
+
+            <Col xs={12} md={6} className="text-center d-flex flex-column justify-content-center align-items-center px-3">
+              <h1 className="fw-bold display-5 mt-5 mt-md-0">Your Accountability Partner Awaits</h1>
+              <p className="fw-bold fs-5 text-muted mt-3" style={{ textAlign: 'justify' }}>
+                "Connect with people who share your goals, stay motivated together, and build powerful habits that last — one connection at a time."
+              </p>
+              <div className="mt-4 d-flex flex-column flex-sm-row justify-content-center align-items-stretch gap-3 w-100">
+                <button
+                 
+                  className="fw-bold  bg-amber-800 rounded fw-bold text-black py-2 px-4 fs-6 fs-sm-6 fs-md-5 w-100 w-sm-auto"
+                >
+                  Get Matched Now
+                </button>
+                <Button
+                  variant="outline-dark"
+                  className="fw-bold text-black hover:text-white py-2 px-4 fs-6 fs-sm-6 fs-md-5 w-100 w-sm-auto"
+                >
+                  Learn More
+                </Button>
+              </div>
+            </Col>
+
+
+            <Col xs={12} md={6} className="d-flex justify-content-center px-3">
+              <div className="shadow rounded overflow-hidden w-100 mt-5" style={{ maxWidth: '600px' }}>
+                <img
+                  src="https://www.betterup.com/hubfs/woman-and-man-looking-at-a-phone-in-the-street-and-smiling-accountability-partner.jpg"
+                  alt="handshake"
+                  className="img-fluid w-100"
+                  style={{ borderRadius: '12px', objectFit: 'cover' }}
+                />
+              </div>
+            </Col>
+
+          </Row>
+        </Container>
+      </div>
       {/* Hero Section */}
-      <div className="herosection d-flex align-items-center">
+      {/* <div className="herosection d-flex align-items-center">
         <Container>
           <Row className="justify-content-start text-start">
             <Col xs={12} md={8} lg={10}>
@@ -36,7 +79,7 @@ function Landing() {
             </Col>
           </Row>
         </Container>
-      </div>
+      </div> */}
 
       {/* About section */}
 
@@ -104,7 +147,7 @@ function Landing() {
 
       {/* How it works */}
 
-      <section style={{ backgroundColor: 'rgba(49, 214, 12, 0.15)', padding: '4rem 0' }}>
+      <section className=' bg-amber-100 p-4'>
         <Container>
           <div className="text-center mb-5">
             <h2 className="display-6 fw-bold">How It Works</h2>
@@ -193,119 +236,108 @@ function Landing() {
 
       </Container>
 
-      {/* Testimonials */}
+      {/* testimonals */}
+      <section className="py-5 px-3" style={{ background: 'linear-gradient(to right, #fffbe6, #fefaf3)' }}>
+        <div className="container">
+          <div className="text-center mb-5">
+            <h2 className="fw-bold display-6 text-dark"> What Our Users Say</h2>
+            <p className="text-muted fs-5">Motivation That Sticks Around</p>
+          </div>
 
-      <Container>
-        <section id="testimonials" className="py-4 " style={{ backgroundColor: 'rgb(255, 240, 133)' }}>
-          <Container className="text-center">
-
-
-
-            <Row>
-              <Col md={6}>
-
-                <div className="mb-5 mt-5">
-                  <Row className="mt-5">
-                    <Col md={6} lg={3} className="mb-3">
-                      <div className="p-3  rounded-3 shadow-sm h-100" style={{ backgroundColor: 'greenyellow' }}>
-                        <strong>1,200+</strong><br />
-                        Goals Tracked
-                      </div>
-                    </Col>
-                    <Col md={6} lg={3} className="mb-3">
-                      <div className="p-3  rounded-3 shadow-sm h-100" style={{ backgroundColor: 'coral' }}>
-                        <strong>100+</strong><br />
-                        Goal Templates.
-                      </div>
-                    </Col>
-                    <Col md={6} lg={3} className="mb-3">
-                      <div className="p-3  rounded-3 shadow-sm h-100" style={{ backgroundColor: 'beige' }}>
-                        <strong>150</strong><br />
-                        Ongoing Streaks
-                      </div>
-                    </Col>
-                    <Col md={6} lg={3} className="mb-3">
-                      <div className="p-3 rounded-3 shadow-sm h-100" style={{ backgroundColor: 'turquoise' }}>
-                        <strong>80,000+</strong><br />
-                        Check-ins Logged
-                      </div>
-                    </Col>
-                  </Row>
-                  <h4 className="fw-bold text-center mt-5">Our Achievements</h4>
-
+          <div className="row gy-4">
+            <div className="col-md-6 col-lg-4">
+              <div className="card h-100 border-0 shadow-sm rounded-4 p-4" style={{ backgroundColor: '#ffffff' }}>
+                <div className="d-flex flex-column align-items-center text-center">
+                  <img
+                    src="https://randomuser.me/api/portraits/men/11.jpg"
+                    alt="Aarav"
+                    className="rounded-circle mb-3"
+                    style={{ width: '80px', height: '80px', objectFit: 'cover', border: '3px solid #ffe58f' }}
+                  />
+                  <p className="text-muted fst-italic mb-3" style={{ fontSize: '1rem' }}>
+                    “Seeing my progress on the heatmap keeps me going—it’s super motivating!”
+                  </p>
+                  <h5 className="fw-semibold mb-1 text-dark">Aarav</h5>
+                  <small className="text-secondary">Daily Reader</small>
                 </div>
-              </Col>
-              <Col md={6} className='mt-5'>
-                <h2 className="mb-5 mt-5">What Our Users Say</h2>
-                <Carousel indicators={false} controls={true} interval={5000}>
-                  <Carousel.Item>
-                    <Card className="mx-auto shadow-sm" style={{ maxWidth: '700px' }}>
-                      <Card.Body className="d-flex align-items-center text-start p-4">
-                        <img
-                          src="https://randomuser.me/api/portraits/women/44.jpg"
-                          alt="Jamie R."
-                          className="rounded-circle me-4"
-                          width={80}
-                          height={80}
-                        />
-                        <div>
-                          <Card.Text className="mb-2 fst-italic">
-                            "I finally finished my novel thanks to my writing buddy. We check in every morning!"
-                          </Card.Text>
-                          <Card.Title className="mb-0">Jamie R.</Card.Title>
-                        </div>
-                      </Card.Body>
-                    </Card>
-                  </Carousel.Item>
+              </div>
+            </div>
 
-                  <Carousel.Item>
-                    <Card className="mx-auto shadow-sm" style={{ maxWidth: '700px' }}>
-                      <Card.Body className="d-flex align-items-center text-start p-4">
-                        <img
-                          src="https://randomuser.me/api/portraits/women/65.jpg"
-                          alt="Priya S."
-                          className="rounded-circle me-4"
-                          width={80}
-                          height={80}
-                        />
-                        <div>
-                          <Card.Text className="mb-2 fst-italic">
-                            "This app made consistency feel fun. I'm working out more than ever before."
-                          </Card.Text>
-                          <Card.Title className="mb-0">Priya S.</Card.Title>
-                        </div>
-                      </Card.Body>
-                    </Card>
-                  </Carousel.Item>
+            <div className="col-md-6 col-lg-4">
+              <div className="card h-100 border-0 shadow-sm rounded-4 p-4" style={{ backgroundColor: '#ffffff' }}>
+                <div className="d-flex flex-column align-items-center text-center">
+                  <img
+                    src="https://randomuser.me/api/portraits/women/22.jpg"
+                    alt="Aliya"
+                    className="rounded-circle mb-3"
+                    style={{ width: '80px', height: '80px', objectFit: 'cover', border: '3px solid #ffe58f' }}
+                  />
+                  <p className="text-muted fst-italic mb-3" style={{ fontSize: '1rem' }}>
+                    “I love that I can follow others' templates and share my wins. Feels like a supportive circle.”
+                  </p>
+                  <h5 className="fw-semibold mb-1 text-dark">Aliya</h5>
+                  <small className="text-secondary">Workout Enthusiast</small>
+                </div>
+              </div>
+            </div>
 
-                  <Carousel.Item>
-                    <Card className="mx-auto shadow-sm" style={{ maxWidth: '700px' }}>
-                      <Card.Body className="d-flex align-items-center text-start p-4">
-                        <img
-                          src="https://randomuser.me/api/portraits/men/75.jpg"
-                          alt="David M."
-                          className="rounded-circle me-4"
-                          width={80}
-                          height={80}
-                        />
-                        <div>
-                          <Card.Text className="mb-2 fst-italic">
-                            "My study partner and I kept each other going during finals week. Total lifesaver."
-                          </Card.Text>
-                          <Card.Title className="mb-0">David M.</Card.Title>
-                        </div>
-                      </Card.Body>
-                    </Card>
-                  </Carousel.Item>
-                </Carousel>
+            <div className="col-md-6 col-lg-4">
+              <div className="card h-100 border-0 shadow-sm rounded-4 p-4" style={{ backgroundColor: '#ffffff' }}>
+                <div className="d-flex flex-column align-items-center text-center">
+                  <img
+                    src="https://randomuser.me/api/portraits/women/65.jpg"
+                    alt="Tanya"
+                    className="rounded-circle mb-3"
+                    style={{ width: '80px', height: '80px', objectFit: 'cover', border: '3px solid #ffe58f' }}
+                  />
+                  <p className="text-muted fst-italic mb-3" style={{ fontSize: '1rem' }}>
+                    “I used to lose track of my habits, but now I can literally see my consistency. The colors on the heatmap are such a vibe!”
+                  </p>
+                  <h5 className="fw-semibold mb-1 text-dark">Tanya</h5>
+                  <small className="text-secondary">Student & Habit Tracker</small>
+                </div>
+              </div>
+            </div>
 
-              </Col>
-            </Row>
-          </Container>
-        </section>
+            <div className="col-md-6 col-lg-4">
+              <div className="card h-100 border-0 shadow-sm rounded-4 p-4" style={{ backgroundColor: '#ffffff' }}>
+                <div className="d-flex flex-column align-items-center text-center">
+                  <img
+                    src="https://randomuser.me/api/portraits/men/30.jpg"
+                    alt="Rohit"
+                    className="rounded-circle mb-3"
+                    style={{ width: '80px', height: '80px', objectFit: 'cover', border: '3px solid #ffe58f' }}
+                  />
+                  <p className="text-muted fst-italic mb-3" style={{ fontSize: '1rem' }}>
+                    “Following someone else’s study routine helped me finally stick to mine. I didn’t feel like I was doing it alone.”
+                  </p>
+                  <h5 className="fw-semibold mb-1 text-dark">Rohit</h5>
+                  <small className="text-secondary">Aspiring UPSC Candidate</small>
+                </div>
+              </div>
+            </div>
 
+            <div className="col-md-6 col-lg-4">
+              <div className="card h-100 border-0 shadow-sm rounded-4 p-4" style={{ backgroundColor: '#ffffff' }}>
+                <div className="d-flex flex-column align-items-center text-center">
+                  <img
+                    src="https://randomuser.me/api/portraits/women/12.jpg"
+                    alt="Priya"
+                    className="rounded-circle mb-3"
+                    style={{ width: '80px', height: '80px', objectFit: 'cover', border: '3px solid #ffe58f' }}
+                  />
+                  <p className="text-muted fst-italic mb-3" style={{ fontSize: '1rem' }}>
+                    “Even when I miss a day, I know I can bounce back. This app helps me stay accountable without pressure.”
+                  </p>
+                  <h5 className="fw-semibold mb-1 text-dark">Priya</h5>
+                  <small className="text-secondary">Mindfulness Explorer</small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
-      </Container>
 
       {/* Faqs */}
       <Container className='mt-5 p-5'  >
@@ -386,7 +418,7 @@ function Landing() {
 
       {/* Contact Form */}
 
-      <section style={{ backgroundColor: 'lightgray', padding: '4rem 0' }}>
+      <section style={{ backgroundColor: 'gray', padding: '4rem 0' }}>
         <Container>
           <div className="text-center mb-5">
             <h2 className="display-6 fw-bold"> Get In Touch</h2>
@@ -395,7 +427,7 @@ function Landing() {
 
           <Row className="justify-content-center">
             <Col md={8}>
-              <form className=" p-4 p-md-5 rounded-4 shadow-sm" style={{ backgroundColor: 'gray' }}>
+              <form className=" p-4 p-md-5 rounded-4 shadow-sm bg-white" >
                 <div className="mb-3">
                   <label htmlFor="name" className="form-label">Your Name</label>
                   <input type="text" className="form-control" id="name" placeholder="Enter your name" />
@@ -422,7 +454,7 @@ function Landing() {
 
           {/* FINAL NOTE */}
           <div className="text-center mt-5">
-            <h4>A Final Note</h4>
+            {/* <h4>A Final Note</h4> */}
             <p className="fs-6 fst-italic">
               Whatever your goal is—whether it’s reading 10 pages a day, running a marathon, or just drinking more water—
               we’re here to cheer you on every step of the way.

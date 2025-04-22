@@ -1,7 +1,6 @@
 import React from 'react'
 import { useState } from 'react'
 import { Link } from 'react-router';
-import Button from '@mui/material/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRightToBracket } from '@fortawesome/free-solid-svg-icons';
 
@@ -20,14 +19,14 @@ function Header() {
   }
   return (
 
-    <header className="sg__header sticky top-0 bg-white shadow-md z-50 pt-0">
+    <header className="sg__header sticky top-0 bg-white shadow-md z-50 pt-3">
       <div className="sg__container flex items-center justify-between w-full max-w-screen-xl mx-auto px-4">
 
         {/* Logo */}
         <Link to="/" className="!no-underline">
             <div className="logo flex items-center gap-3 w-full sm:w-auto">
-              <img src="./clock.png" alt="brand logo" className="h-20 w-20" />
-              <h1 className="text-xl font-semibold text-green-600">LookOut</h1>
+              <img src="https://play-lh.googleusercontent.com/7cwJD9wRKPu1xnSomH7UI0ICAXT_lJt7JAJa76Nut0oYH__b2XvjaUUpJHQhhx41roA" alt="brand logo" className="h-20 w-20" style={{width:'50px',height:'50px'}}/>
+              <h1 className="fs-3 font-semibold text-black italic">sharedo</h1>
             </div>
         </Link>
 
@@ -71,14 +70,14 @@ function Header() {
 
           <div className=''>
             <Link to="/login">
-              <Button className='me-4' variant="outlined" endIcon={<FontAwesomeIcon icon={faRightToBracket} />}>
+              <button className='me-4 btn btn-outline-danger p-2'  endIcon={<FontAwesomeIcon icon={faRightToBracket} />}>
                 Login
-              </Button>
+              </button>
             </Link>
             <Link to="/register">
-              <Button variant="contained" >
+              <button className='bg-amber-300 p-2  text-black rounded' >
                 Register
-              </Button>
+              </button>
             </Link>
           </div>
         </nav>)
