@@ -10,7 +10,7 @@ function DashBoard() {
     const [tab,setTab] = useState('dashboard')
     const { username } = useParams()
 
-    console.log(username)
+    // console.log(username)
     return (
         <>
             <Container fluid>

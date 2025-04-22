@@ -26,20 +26,19 @@ function InfoModal({ show, handleClose, activityDetails  }) {
             End Date: {activityDetails.details.endDate}
           </p>
         )}
-        
+
       </Modal.Body>
       <Modal.Footer>
         <Button variant="outline-secondary" onClick={handleClose}>Close</Button>
-        <Button variant="outline-primary" onClick={handleClose}>Follow</Button>
+        <Button variant="outline-primary" onClick={handleClose}>Join</Button>
       </Modal.Footer>
     </Modal>
   )
 }
 
-function ExploreCard({ activity }) {
+function ExploreCard({ activity }) { //username, title , description
  // const navigate = useNavigate();
   const [modalShow, setModalShow] = useState(false);
-
   return (
     <>
 <Col xs={12} sm={6} md={4} lg={4} className="mb-4 d-flex">
@@ -95,6 +94,7 @@ function ExploreCard({ activity }) {
         </Row>
       </Container> */}
 
+      <div className='text-danger text-center'><p> 🔃 Refresh Network Error </p></div>
       {/* Modal */}
       <InfoModal show={modalShow} handleClose={() => setModalShow(false)} activityDetails={activity} />
     </>

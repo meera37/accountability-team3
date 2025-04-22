@@ -70,7 +70,7 @@ function ActivityLister({tab,userid}) {
   const [errors, setErrors] = useState({});
   const [descriptionLength, setDescriptionLength] = useState(15);
 
-  console.log(urlpath,currentUser, loggedUser)
+  // console.log(urlpath,currentUser, loggedUser)
 
   // authorization condition
   const authUser =  (currentUser == loggedUser)

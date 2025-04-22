@@ -5,16 +5,24 @@ import { fetchAllUserHistoryApi } from '../services/allApi';
 
 function Explore({tab}) {
 
+  const shuffleArray = (arr) => {
+    for(let i = 0 ; i < arr.length -1 ; i++){
+      const j = Math.floor(Math.random()*(i+1))
+      [arr[i], arr[j]] = [ arr[j], arr[i]]
+    }
+    return arr;
+ }
+
   const [historyItems, setHistoryItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchHistory = async () => {
-      setLoading(true); 
+      setLoading(true);
       // try {
       //   const result = await fetchAllUserHistoryApi();
-      //   console.log("User History Data:", result?.data); 
+      //   console.log("User History Data:", result?.data);
       //  setHistoryItems(result?.data || []);
       //  setLoading(false);
       // } catch (error) {
@@ -31,11 +39,11 @@ function Explore({tab}) {
           for (const key in user) {
             if (user.hasOwnProperty(key) && typeof user[key] === 'object' && user[key] !== null && user[key].hasOwnProperty('type')) {
               const activity = user[key];
-              
+
               if (activity.type === 'public') {
                 console.log("Public Activity:", { name: key, details: activity });
               }
-              
+
               extractedActivities.push({ name: key, details: activity, userId: user.id });
             }
           }
@@ -53,7 +61,7 @@ function Explore({tab}) {
     if (tab === 'explore') {
       fetchHistory();
     }
-  }, [tab]); 
+  }, [tab]);
 
   if (loading) {
     return <p>Loading activities...</p>;
@@ -64,33 +72,32 @@ function Explore({tab}) {
   }
 
   return (
-
     <>
       <div aria-hidden={ tab !='explore'} className={`p-4 pt-0 space-y-6 ${tab=='explore'? 'block':'hidden' }`}>
       <Container className="d-flex justify-content-center align-items-center flex-column">
 
         <h1 className='mt-5 mb-5 text-center'>Explore more activities</h1>
 
-<Row>
-  {historyItems
-  .filter(activity=>activity.details.type === 'public')
-  .map(item=>(
-          <ExploreCard key={`${item.userId}-${item.name}`} activity={item}/>
-  
-  ))}
-</Row>
-{historyItems.length ===0 && !loading && !error && (
-<p>
-    No activities found.
-  
-</p>)}
+              <Row>
+                {historyItems
+                .filter(activity=>activity.details.type === 'public')
+                .map(item=>(
+                        <ExploreCard key={`${item.userId}-${item.name}`} activity={item}/>
+
+                ))}
+              </Row>
+              {historyItems.length ===0 && !loading && !error && (
+              <p>
+                  No activities found.
+
+              </p>)}
 
       </Container>
+
       <div className='text-danger text-center'><p> 🔃 Refresh Network Error </p></div>
 
     </div >
     </>
-    
   )
 }
 
