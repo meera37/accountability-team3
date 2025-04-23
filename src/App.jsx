@@ -5,7 +5,6 @@ import Landing from './pages/Landing'
 import Register from './pages/Register'
 import Activity from './pages/Activity'
 import Login from './pages/Login';
-import ActivityLister from './components/ActivityLister';
 import Blog from './pages/Blog';
 import BlogDetail from './pages/BlogDetail';
 import DashBoard from './pages/DashBoard';
@@ -36,7 +35,7 @@ function App() {
             <Route
                 path='/dashboard'
                 element={ isUserLogged?
-                  <DashBoard/>
+                  <DashBoard  />
                   :
                   <Navigate to="/"/>
                 } />
@@ -48,7 +47,6 @@ function App() {
                   :
                   <Navigate to="/" />
                   } />
-
 
             <Route
                 path='/login'

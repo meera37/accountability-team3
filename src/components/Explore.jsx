@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Container, Row } from 'react-bootstrap'
 import ExploreCard from "./ExploreCard";
 import { fetchAllUserHistoryApi } from '../services/allApi';
+import InfoModal from './InfoModal';
 
 function Explore({tab}) {
 
@@ -16,20 +17,20 @@ function Explore({tab}) {
   const [historyItems, setHistoryItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const currentUser = localStorage.getItem('curUser');
+  const [modalShow, setModalShow] = useState(false);
+  const [selectedActivity, setSelectedActivity] = useState(null);
+
+  const handleCloseModal = () => setModalShow(false);
+  const handleOpenModal = (activity) => {
+    setSelectedActivity(activity);
+    setModalShow(true);
+  };
 
   useEffect(() => {
     const fetchHistory = async () => {
       setLoading(true);
-      // try {
-      //   const result = await fetchAllUserHistoryApi();
-      //   console.log("User History Data:", result?.data);
-      //  setHistoryItems(result?.data || []);
-      //  setLoading(false);
-      // } catch (error) {
-      //   console.error("Error fetching user history:", error);
-      //   setError(error);
-      //   setLoading(false);
-      // }
+      
       try {
         const result = await fetchAllUserHistoryApi();
         const userDataArray = result?.data || [];
@@ -48,8 +49,9 @@ function Explore({tab}) {
             }
           }
         });
+const filteredActivities = extractedActivities.filter(activity => activity.userId !== currentUser);
 
-        setHistoryItems(extractedActivities);
+setHistoryItems(filteredActivities)
         setLoading(false);
       } catch (error) {
         console.error("Error fetching user history:", error);
@@ -61,15 +63,9 @@ function Explore({tab}) {
     if (tab === 'explore') {
       fetchHistory();
     }
-  }, [tab]);
+      setLoading(false);
+  }, [tab, currentUser]);
 
-  if (loading) {
-    return <p>Loading activities...</p>;
-  }
-
-  if (error) {
-    return <p>Error loading activities!</p>;
-  }
 
   return (
     <>
@@ -78,25 +74,24 @@ function Explore({tab}) {
 
         <h1 className='mt-5 mb-5 text-center'>Explore more activities</h1>
 
-              <Row>
-                {historyItems
-                .filter(activity=>activity.details.type === 'public')
-                .map(item=>(
-                        <ExploreCard key={`${item.userId}-${item.name}`} activity={item}/>
+<Row>
+  {historyItems
+  .filter(activity=>activity.details.type === 'public')
+  .map(item=>(
+          <ExploreCard key={`${item.userId}-${item.name}`} activity={item} openModal={handleOpenModal}/>
+  ))}
+</Row>
+{historyItems.length ===0 && !loading && !error && (
+<p>
+    No activities found.
 
-                ))}
-              </Row>
-              {historyItems.length ===0 && !loading && !error && (
-              <p>
-                  No activities found.
-
-              </p>)}
+</p>)}
 
       </Container>
-
-      <div className='text-danger text-center'><p> 🔃 Refresh Network Error </p></div>
+      {/* <div className='text-danger text-center'><p> 🔃 Refresh Network Error </p></div> */}
 
     </div >
+    <InfoModal show={modalShow} handleClose={handleCloseModal} activityDetails={selectedActivity} />
     </>
   )
 }

@@ -6,7 +6,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
-import { getAllUsersApi, registerUserApi , createUserActivityApi , createActivityHistoryApi } from  '../services/allApi';
+import { getAllUsersApi, registerUserApi, createUserActivityApi, createActivityHistoryApi } from '../services/allApi';
 
 function Reg() {
     const [user, setUser] = useState("")
@@ -65,29 +65,47 @@ function Reg() {
     const handleRegister = async (e) => {
         e.preventDefault();
 
-        let core = [ "exercise","learning", "self care", "nutrition", "Time management", "journalling" ]
+        //       let core = [ "exercise","learning", "self care", "nutrition", "Time management", "journalling" ]
+        let core = [
+            { name: "exercise", description: "Physical activity for health and fitness." },
+            { name: "learning", description: "Acquiring new knowledge or skills." },
+            { name: "self care", description: "Activities to promote well-being." },
+            { name: "nutrition", description: "Focusing on healthy eating habits." },
+            { name: "Time management", description: "Organizing and planning your time effectively." },
+            { name: "journalling", description: "Reflective writing for personal growth." }
+        ]
         const bootSeq = {
-            "core": core,
+            // "core": core,
+            //"core": core.map(activity => ({ name: activity.name })),
+            "core": core.map(activity => activity.name ),
             "private": [],
             "public": [],
             "archived": [],
-            "id":user
+            "id": user
         }
 
-        let startdate =  new Date().toISOString().slice(0,10)
+        let startdate = new Date().toISOString().slice(0, 10)
         let historySequence = {
-            id: user ,
+            id: user,
         }
 
-        core.forEach( item => ( historySequence[item] = {
+        core.forEach(activity => (historySequence[activity.name] = {
+
+            //  core.forEach( item => ( historySequence[item] = {
             type: "core",
-            startDate: startdate ,
+            description: activity.description,
+
+            startDate: startdate,
             endDate: "never",
             options: {
-                 "intensityScale": [ 0,1,2, 3, 4, 5 ]
+                "intensityScale": [0, 1, 2, 3, 4, 5]
             },
-            history: {"2025":[]}
+            history: { "2025": [] }
         }))
+
+        console.log("coreActivities:", core);
+        console.log("bootSeq:", bootSeq);
+        console.log("historySequence:", historySequence);
 
         const isFormValid = user && pswd && email && pswdCheck && isUser && isPswd && isEmail && isPswdCheck;
 
@@ -105,12 +123,12 @@ function Reg() {
 
             const res = await getAllUsersApi();
             const existingUser = res.data.find(
-              u => u.username === user || u.email === email
+                u => u.username === user || u.email === email
             );
 
             if (existingUser) {
-              toast.error("Username or Email already exists");
-              return;
+                toast.error("Username or Email already exists");
+                return;
             }
 
             const response = await registerUserApi(reqBody)
@@ -130,9 +148,9 @@ function Reg() {
 
                 setTimeout(() => {
                     navigate('/login');
-                  }, 2000);
+                }, 2000);
             }
-            else{
+            else {
                 toast.error("Something went wrong")
             }
         } catch (error) {
@@ -189,18 +207,18 @@ function Reg() {
                             className="img-fluid rounded shadow"
                         />
                     </div> */}
-                      <div
-                      className="col-lg-5 col-md-6 d-none d-md-flex flex-column justify-content-center align-items-center p-4 text-white"
-                      style={{
-                        background: 'linear-gradient(135deg, #9c27b0 0%, #7b1fa2 100%)',
-                        animation: 'fadeIn 1s ease-in',
-                      }}
+                    <div
+                        className="col-lg-5 col-md-6 d-none d-md-flex flex-column justify-content-center align-items-center p-4 text-white"
+                        style={{
+                            background: 'linear-gradient(135deg, #9c27b0 0%, #7b1fa2 100%)',
+                            animation: 'fadeIn 1s ease-in',
+                        }}
                     >
-                      <div className="text-center">
-                        <FontAwesomeIcon icon={faCheckCircle} bounce size="3x" className="mb-3" />
-                        <h2>Stay on Track, Every Step</h2>
-                        <p>Consistency creates success — let's start today.</p>
-                      </div>
+                        <div className="text-center">
+                            <FontAwesomeIcon icon={faCheckCircle} bounce size="3x" className="mb-3" />
+                            <h2>Stay on Track, Every Step</h2>
+                            <p>Consistency creates success — let's start today.</p>
+                        </div>
                     </div>
                 </div>
             </div>
