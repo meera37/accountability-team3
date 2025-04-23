@@ -6,6 +6,7 @@ import Options from '../components/Options'
 import Mgrid from '../components/Mgrid';
 
 function Activity({title}){
+	
 
  return(
 	 <>
@@ -14,7 +15,7 @@ function Activity({title}){
 			
 			<Row className='justify-center items-start w-100'>
 				<Col md={6}>
-					<Grid/>
+					<Grid />
 					{/* <Mgrid/> */}
 				</Col>
 				<Col md={4}>

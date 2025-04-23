@@ -6,6 +6,7 @@ const [selected, setSelected] = useState(null);
 
 const handleClick = (id) => {
   setSelected(id);
+  
 };
 
   const options = [

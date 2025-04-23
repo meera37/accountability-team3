@@ -16,9 +16,11 @@
 .markinput {
   width: 25px;
   height: 25px;
+  border-radius: 50%;
+  transition: background-color 0.5s ease;
 }
 
-.markinput:focus {
+.markinput:hover{
   background-color: greenyellow;
 }
 

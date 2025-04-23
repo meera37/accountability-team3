@@ -3,7 +3,9 @@ import { Container } from 'react-bootstrap';
 
 function Grid() {
   const [year, setYear] = useState('');
-  const [markedDays, setMarkedDays] = useState({}); // dateformat:- { "1-January-2025": "bg-red-500" }
+  const [markedDays, setMarkedDays] = useState([]); // dateformat:- { "1-January-2025": "bg-red-500" }
+  const [selectedColor, setSelectedColor] = useState("bg-green-800"); // Dark green color
+
   console.log(markedDays);
   
 
@@ -12,58 +14,59 @@ function Grid() {
     setYear(currentYear);
   }, []);
 
-  const colors = [
-    "bg-red-500",
-    "bg-green-500",
-    "bg-blue-500",
-    "bg-yellow-500",
-    "bg-purple-500",
-    "bg-pink-500",
-    "bg-orange-500",
-    "bg-cyan-500",
-    "bg-lime-500",
-    "bg-rose-500"
-  ];
+  useEffect(() => {
+    const totalDays = isLeapYear(year) ? 366 : 365;
+    setMarkedDays(new Array(totalDays).fill(0));
+  }, [year]);
 
-  const getRandomColor = () => {
-    const index = Math.floor(Math.random() * colors.length);
-    return colors[index];
+  const handleColorChange = (color) => {
+    setSelectedColor(color); // Update the color state to a new color
   };
 
-  const handleClick = (day, month, year) => {
-    const dayKey = `${day}-${month}-${year}`;
+  const getDayIndex = (day, monthIndex) => {
+    const monthDayCounts = [
+      31, 28, 31, 30, 31, 30,
+      31, 31, 30, 31, 30, 31
+    ];
+    if (isLeapYear(year)) monthDayCounts[1] = 29;
+
+    let index = day - 1;
+    for (let i = 0; i < monthIndex; i++) {
+      index += monthDayCounts[i];
+    }
+    return index;
+  };
+
+  const handleClick = (day, monthIndex) => {
+    const index = getDayIndex(day, monthIndex);
     setMarkedDays((prev) => {
-      const updated = { ...prev };
-      if (updated[dayKey]) {
-        delete updated[dayKey]; // unmark
-      } else {
-        updated[dayKey] = getRandomColor(); // mark with random color
-      }
+      const updated = [...prev];
+      updated[index] = updated[index] ? 0 : selectedColor; // mark/unmark with the selected  green color
       return updated;
     });
   };
 
-  const col_fill = (monthName, numOfDays) => {
+  const col_fill = (monthName, numOfDays, monthIndex) => {
     const dayElements = [];
 
     for (let day = 1; day <= 31; day++) {
-      const dayKey = `${day}-${monthName}-${year}`;
-      const bgColor = markedDays[dayKey] || '';
+      const index = getDayIndex(day, monthIndex);
+      const bgColor = (day <= numOfDays) ? markedDays[index] || '' : '';
 
       if (day <= numOfDays) {
         dayElements.push(
           <button
-            key={dayKey}
+            key={`${day}-${monthName}`}
             className={`markinput hover:opacity-80 border-dark rounded-0 border-1 ${bgColor}`}
-            onClick={() => handleClick(day, monthName, year)}
+            onClick={() => handleClick(day, monthIndex)}
           >
-            {/* No number inside */}
+           
           </button>
         );
       } else {
         dayElements.push(
           <button
-            key={dayKey}
+            key={`${day}-${monthName}`}
             className="border markinput bg-slate-500 border-dark rounded-0 border- invisible"
             disabled
           />
@@ -106,15 +109,15 @@ function Grid() {
     <Container className="d-flex justify-center align-items-center flex-column">
       <div className="calendar-grid my-1 p-5">
         <div className="flex justify-center">
-          <button
+          {/* <button
             className="rounded-3 shadow bg-red-500 px-4 fs-3 me-3"
             onClick={() => handleChange(year - 1)}
-          > - </button>
+          > - </button> */}
           <span className="fs-3 fw-bold">Year {year}</span>
-          <button
+          {/* <button
             className="rounded-3 shadow bg-green-400 px-3 fs-3 ms-3"
             onClick={() => handleChange(year + 1)}
-          > + </button>
+          > + </button> */}
         </div>
 
         <div className="d-flex my-2">
@@ -129,7 +132,7 @@ function Grid() {
           </div>
 
           {/* Month columns with day buttons */}
-          {months.map((month, idx) => col_fill(month, days[idx]))}
+          {months.map((month, idx) => col_fill(month, days[idx], idx))}
         </div>
       </div>
     </Container>
