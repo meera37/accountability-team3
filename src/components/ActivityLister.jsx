@@ -3,7 +3,7 @@ import SummaryCards from './SummaryCards'
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
-import { fetchAllActivitiesApi, fetchSingleUserApi, updateUserHabitsApi, fetchAllUserHistoryApi, patchHistoryApi } from '../services/allApi';
+import { fetchAllActivitiesApi, fetchSingleUserApi, updateUserHabitsApi, fetchAllUserHistoryApi, patchHistoryApi, setProfilePictureApi } from '../services/allApi';
 import ActivityRow from './ActivityRow';
 import { useParams , useLocation , useNavigate } from 'react-router-dom'
 
@@ -70,6 +70,9 @@ function ActivityLister({tab,userid}) {
   const [errors, setErrors] = useState({});
   const [descriptionLength, setDescriptionLength] = useState(15);
 
+  // profilepic ssetting
+
+  const [index , setIndex] = useState(0)
   console.log(urlpath,currentUser, loggedUser)
 
   // authorization condition
@@ -231,16 +234,52 @@ function ActivityLister({tab,userid}) {
     }
 
   }
+
+
+  // func to set profilepic
+
+  const handleprevious = ()=>{
+    setIndex(index<0?names.length-1:index-1)
+  }
+
+  const handleNext = ()=>{
+    setIndex(index == names.length -1 ? 0: index+1)
+
+  }
+
+  const handlesetprofile = async()=>{
+    
+    const result = await setProfilePictureApi({
+      "id":currentUser,
+      "picture": names[index]
+    })
+    console.log(result);
+    
+  }
+
+  const names = ['Valentina','Jade','Alexander','Jameson','Mason','Emery','Robert','Aidan','Jessica','Easton','Christopher','Liliana','Jocelyn','Wyatt','Eden','Vivian','Ryan','Maria','Caleb','Adrian']
+
   return (
     <>
       <div aria-hidden={tab != 'dashboard'} className={`p-4 pt-0 space-y-6 ${tab == 'dashboard' ? 'block' : 'hidden'}`}>
 
-        <div className='mb-5'>
+        <div className='mb-5 flex justify-center items-center flex-col'>
             <div className='d-flex justify-center'>
-              <img className="rounded-circle w-[150px] h-[150px] shadow-4-strong " alt="avatar2" src="https://api.dicebear.com/9.x/adventurer/svg?seed=Aidan" />
+              <img className="rounded-circle w-[150px] h-[150px] shadow-4-strong " alt="avatar2" src={`https://api.dicebear.com/9.x/adventurer/svg?seed=${names[index]}`} />
+             
             </div>
-            <div className='d-flex justify-content-center'>
+
+            <div className='d-flex justify-content-center text-center flex-col'>
                 <h1>{ currentUser }</h1>
+
+                  {/* button profilepic setting */}
+                <div className='flex justify-between items-center flex-row'>
+                <button onClick={handleprevious} className='bg-amber-700 text-white p-2 rounded w-20 me-3'>Previous</button>
+                <button onClick={handlesetprofile} className='bg-amber-300 text-white p-2 rounded w-20 me-3'>Set</button>
+                <button onClick={handleNext} className='bg-green-500 text-white p-2 rounded w-20'>Next</button>
+              </div>
+
+
             </div>
         </div>
 

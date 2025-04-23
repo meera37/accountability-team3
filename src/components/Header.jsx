@@ -17,6 +17,7 @@ function Header() {
     'blog': 'blogs',
     'contact': 'contact',
   }
+
   return (
 
     <header className="sg__header sticky top-0 bg-white shadow-md z-50 pt-3">
@@ -42,12 +43,17 @@ function Header() {
           </div>
         </button>
 
+
+
         {
          isUserLogged?
         (
            <div className='d-flex align-center justify-center flex-row-reverse'>
             {/* free avatar api - https://www.dicebear.com/playground/ */}
-              <img className="rounded-circle shadow-4-strong w-[40px] h-[40px] md:w-[80px] md:h-[80px]" alt="avatar2" src="https://api.dicebear.com/9.x/adventurer/svg?seed=Aidan" />
+               
+              <img className="rounded-circle shadow-4-strong w-[40px] h-[40px] md:w-[80px] md:h-[80px]" alt="avatar2" src={`https://api.dicebear.com/9.x/adventurer/svg?seed=`} />
+
+
               <p className='mt-3 me-1 text-bold'>Hello, {currentUser}</p>
           </div>
         )

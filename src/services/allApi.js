@@ -75,3 +75,14 @@ export const createUserApi = async(reqBody) => {
 export const addToUsernameApi = async(reqBody) => {
     return await commonApi('PUT',`${serverurl}/usernames/`, reqBody)
 }
+
+//post profilepicture 
+export const setProfilePictureApi = async(reqBody) => {
+    return await commonApi('PUT',`${serverurl}/profilepicture/${reqBody.id}`,reqBody)
+};
+
+
+export const profilePicChangeApi = async(username) => {
+    return await commonApi('GET',`${serverurl}/profilepicture/${username}`)
+};
+
