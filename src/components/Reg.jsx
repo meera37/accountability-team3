@@ -90,11 +90,9 @@ function Reg() {
         }
 
         core.forEach(activity => (historySequence[activity.name] = {
-
             //  core.forEach( item => ( historySequence[item] = {
             type: "core",
             description: activity.description,
-
             startDate: startdate,
             endDate: "never",
             options: {

@@ -235,7 +235,6 @@ function ActivityLister({tab,userid}) {
 
   }
 
-
   // func to set profilepic
 
   const handleprevious = ()=>{

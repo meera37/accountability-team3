@@ -46,8 +46,8 @@ function ActivityRow({ activity, idx, handleOpenDescriptionModal, descriptionLen
 
                         {
                          authUser &&
-                            <button onClick={handleDeleteClick} style={buttonStyle} className="bg-green-500 text-white px-2 py-1 rounded hover:bg-green-600 text-sm">
-                                    Archive
+                            <button onClick={handleDeleteClick} style={buttonStyle} className="bg-red-500 text-white px-2 py-1 rounded hover:text-red-400 hover:bg-white-600 text-sm">
+                                    Delete
                             </button>
                         }
 
@@ -78,4 +78,3 @@ function ActivityRow({ activity, idx, handleOpenDescriptionModal, descriptionLen
 
 export default ActivityRow
 
- 

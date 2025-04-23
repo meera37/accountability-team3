@@ -63,7 +63,8 @@ function Header() {
           className={`navigation w-full lg:w-auto bg-white lg:bg-transparent transition-all duration-300 ease-in-out ${menuopen ? 'flex flex-col absolute top-full left-0 right-0 px-4 py-2 shadow-md' : 'hidden'
             } lg:flex lg:flex-row lg:static lg:items-center lg:justify-between`}
         >
-          {Object.keys(header_links).map((text, idx) => (
+          {
+          Object.keys(header_links).map((text, idx) => (
             <Link
               to={header_links[text]}
               key={`navigation${idx}`}

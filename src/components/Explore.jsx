@@ -12,7 +12,7 @@ function Explore({tab}) {
       [arr[i], arr[j]] = [ arr[j], arr[i]]
     }
     return arr;
- }
+  }
 
   const [historyItems, setHistoryItems] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -44,7 +44,6 @@ function Explore({tab}) {
               if (activity.type === 'public') {
                 console.log("Public Activity:", { name: key, details: activity });
               }
-
               extractedActivities.push({ name: key, details: activity, userId: user.id });
             }
           }
