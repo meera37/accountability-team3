@@ -3,11 +3,11 @@ import DeleteConfirmModal from './DeleteConfirmModal';
 
 function ActivityRow({ activity, idx, handleOpenDescriptionModal, descriptionLength, isPublicSection, onAddTemplate, typeCol ,  authUser }) {
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-    
+
     const buttonStyle = {
         marginRight: '8px',
       };
-   
+
       const handleDeleteClick = () => {
         setIsDeleteModalOpen(true);
     };
@@ -15,8 +15,7 @@ function ActivityRow({ activity, idx, handleOpenDescriptionModal, descriptionLen
     const handleCloseDeleteModal = () => {
         setIsDeleteModalOpen(false);
     };
-    
- 
+
     return (
         <>
             <tr key={idx} className="border-b">
@@ -47,8 +46,8 @@ function ActivityRow({ activity, idx, handleOpenDescriptionModal, descriptionLen
 
                         {
                          authUser &&
-                            <button onClick={handleDeleteClick} style={buttonStyle} className="bg-green-500 text-white px-2 py-1 rounded hover:bg-green-600 text-sm">
-                                    Archive
+                            <button onClick={handleDeleteClick} style={buttonStyle} className="bg-red-500 text-white px-2 py-1 rounded hover:text-red-400 hover:bg-white-600 text-sm">
+                                    Delete
                             </button>
                         }
 

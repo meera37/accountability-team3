@@ -43,10 +43,8 @@ export const getBlogDetailsApi = async () => {
 
 export const fetchAllUserHistoryApi = async (username) => {
     if (username){
-        // console.log(username)
         return await commonApi('GET', `${serverurl}/alluserhistory/${username}`);
     }
-    console.log('fetch all history')
     return await commonApi('GET', `${serverurl}/alluserhistory`);
 };
 

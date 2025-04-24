@@ -4,21 +4,18 @@ import { Col, Card, Button, Modal } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 
 function ExploreCard({ activity, openModal  }) {
- 
+
   return (
     <>
       <Col xs={12} sm={6} md={4} lg={4} className="mb-4 d-flex">
         <Card style={{ width: '100%',height:'auto' }} className="card h-100">
 
           <div className='d-flex justify-content-center ' >
-<Link to={`/u/${activity.userId}`} reloadDocument>
+            <Link to={`/u/${activity.userId}`} reloadDocument>
               <img className="rounded-circle shadow-4-strong border-warning border-2 mt-4 p-1" width={100} alt="avatar2" src="https://api.dicebear.com/9.x/adventurer/svg?seed=Aidan" />
               <Card.Title className="fw-bold text-dark text-center no-underline">{activity.userId}</Card.Title>
-
-</Link>
+            </Link>
           </div>
-
-
 
           <Card.Body className="d-flex flex-column justify-content-between" style={{ paddingRight: '5rem' }} >
             <div>

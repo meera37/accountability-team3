@@ -7,8 +7,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle, faLock, faUser } from '@fortawesome/free-solid-svg-icons';
 import { loginUserApi } from '../services/allApi';
 import { toast, ToastContainer } from 'react-toastify';
+import { profilePicChangeApi } from '../services/allApi'
 
-function LoginForm() {
+function LoginForm({ setDp }) {
 
   const [loginId, setLoginId] = useState("")
   const [password, setPassword] = useState("")
@@ -54,10 +55,18 @@ function LoginForm() {
       } else if (user.password !== password) {
         setErrorMessage("Incorrect password.");
       } else {
-
         toast.success("Login successful!");
         localStorage.setItem('userLogged', JSON.stringify(true))
         localStorage.setItem('curUser', user.username)
+
+        const res = await profilePicChangeApi(user.username)
+
+        if (res.status >= 200 && res.status < 300){
+          const picture = res.data.picture
+          localStorage.setItem('dp', picture)
+          setDp(picture)
+        }
+
         setLoginId('');
         setPassword('');
         setErrorMessage('');
@@ -101,11 +110,8 @@ function LoginForm() {
               className="col-lg-5 col-md-6 d-none d-md-flex flex-column justify-content-center align-items-center p-4 text-white"
               style={{
                 // background: 'linear-gradient(135deg, #9c27b0 0%, #7b1fa2 100%)',
-                background: 'linear-gradient(135deg, #f97373 0%, #ed8936 100%)'
+                background: 'linear-gradient(135deg, #f97373 0%, #ed8936 100%)',
                 // background: 'linear-gradient(135deg, #fbb6ce 0%, #ed64a6 100%)'
-
-                ,
-
                 animation: 'fadeIn 1s ease-in',
               }}
             >

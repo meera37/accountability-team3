@@ -4,7 +4,7 @@ import { Link } from 'react-router';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRightToBracket } from '@fortawesome/free-solid-svg-icons';
 
-function Header() {
+function Header({dp}) {
   const isUserLogged = JSON.parse(localStorage.getItem('userLogged'))
   const currentUser = localStorage.getItem('curUser')
 
@@ -50,10 +50,9 @@ function Header() {
         (
            <div className='d-flex align-center justify-center flex-row-reverse'>
             {/* free avatar api - https://www.dicebear.com/playground/ */}
-               
-              <img className="rounded-circle shadow-4-strong w-[40px] h-[40px] md:w-[80px] md:h-[80px]" alt="avatar2" src={`https://api.dicebear.com/9.x/adventurer/svg?seed=`} />
 
-
+              <img className="rounded-circle shadow-4-strong w-[40px] h-[40px] md:w-[80px] md:h-[80px]" alt="avatar2" src={`https://api.dicebear.com/9.x/adventurer/svg?seed=${dp}`} />
+              
               <p className='mt-3 me-1 text-bold'>Hello, {currentUser}</p>
           </div>
         )
@@ -63,7 +62,8 @@ function Header() {
           className={`navigation w-full lg:w-auto bg-white lg:bg-transparent transition-all duration-300 ease-in-out ${menuopen ? 'flex flex-col absolute top-full left-0 right-0 px-4 py-2 shadow-md' : 'hidden'
             } lg:flex lg:flex-row lg:static lg:items-center lg:justify-between`}
         >
-          {Object.keys(header_links).map((text, idx) => (
+          {
+          Object.keys(header_links).map((text, idx) => (
             <Link
               to={header_links[text]}
               key={`navigation${idx}`}

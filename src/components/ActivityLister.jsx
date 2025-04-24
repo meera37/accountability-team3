@@ -7,12 +7,10 @@ import { fetchAllActivitiesApi, fetchSingleUserApi, updateUserHabitsApi, fetchAl
 import ActivityRow from './ActivityRow';
 import { useParams , useLocation , useNavigate } from 'react-router-dom'
 
-function ActivityLister({tab,userid}) {
+function ActivityLister({tab,userid,dp ,setDp}) {
 
   useEffect(() => {
     let curUser = userid || localStorage.getItem('curUser')
-    console.log({curUser})
-
     setCurrentUser(curUser)
 
     fetchdata(curUser)
@@ -73,7 +71,8 @@ function ActivityLister({tab,userid}) {
   // profilepic ssetting
 
   const [index , setIndex] = useState(0)
-  console.log(urlpath,currentUser, loggedUser)
+  const [profile , setProfile] = useState(localStorage.getItem('dp')||'');
+  // console.log(urlpath,currentUser, loggedUser)
 
   // authorization condition
   const authUser =  (currentUser == loggedUser)
@@ -201,15 +200,12 @@ function ActivityLister({tab,userid}) {
   const handleAddTemplate = async (activity) => {
     console.log(` ${loggedUser} Cloning template for activity: ${activity.name} from ${currentUser}`);
 
-
-
-
     const response = await fetchAllUserHistoryApi(currentUser);
     console.log(response.data)
 
     const data = response.data
 
-    const key = "fishing" || activity.name ;
+    const key =  activity.name ;
 
     //todo find the difference between start date and todays date and fill the history with zeroes
     let difference = 10
@@ -218,7 +214,7 @@ function ActivityLister({tab,userid}) {
                 author: currentUser,
                 startDate: new Date().toISOString().slice(0, 10),
                 history:[ ...new Array(difference).fill(0) , 1,2,5,4,6,7],
-              }
+    }
 
     console.log(clonedHabit);
 
@@ -226,35 +222,36 @@ function ActivityLister({tab,userid}) {
     const details = selfHistory.data
 
     if(details.hasOwnProperty(key)){
-      console.log('habit already cloned toast error')
+      //todo:  toast error here
+      console.log('habit already cloned ')
     }else{
       // add the cloned habit to our history
       console.log('cloning in progress')
       const resp = await patchHistoryApi({ id: loggedUser, [key]: clonedHabit })
     }
-
   }
-
 
   // func to set profilepic
 
   const handleprevious = ()=>{
-    setIndex(index<0?names.length-1:index-1)
+    const value = index<0?names.length-1:index-1
+    setIndex(value)
+    setProfile(names[value])
   }
 
   const handleNext = ()=>{
-    setIndex(index == names.length -1 ? 0: index+1)
-
+    const value =  index==names.length -1 ? 0: index+1
+    setIndex(value)
+    setProfile(names[value])
   }
 
   const handlesetprofile = async()=>{
-    
+
     const result = await setProfilePictureApi({
       "id":currentUser,
       "picture": names[index]
     })
-    console.log(result);
-    
+    setDp(result.data.picture);
   }
 
   const names = ['Valentina','Jade','Alexander','Jameson','Mason','Emery','Robert','Aidan','Jessica','Easton','Christopher','Liliana','Jocelyn','Wyatt','Eden','Vivian','Ryan','Maria','Caleb','Adrian']
@@ -265,8 +262,8 @@ function ActivityLister({tab,userid}) {
 
         <div className='mb-5 flex justify-center items-center flex-col'>
             <div className='d-flex justify-center'>
-              <img className="rounded-circle w-[150px] h-[150px] shadow-4-strong " alt="avatar2" src={`https://api.dicebear.com/9.x/adventurer/svg?seed=${names[index]}`} />
-             
+              <img className="rounded-circle w-[150px] h-[150px] shadow-4-strong " alt="avatar2" src={`https://api.dicebear.com/9.x/adventurer/svg?seed=${profile}`} />
+
             </div>
 
             <div className='d-flex justify-content-center text-center flex-col'>
