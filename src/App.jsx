@@ -14,14 +14,18 @@ import './App.css'
 import { useNavigate  } from 'react-router-dom';
 import Explore from './components/Explore';
 import PageNotFound from './pages/PageNotFound';
+import { useEffect, useState } from 'react';
+
 
 function App() {
   const navigate = useNavigate();
   const isUserLogged = JSON.parse(localStorage.getItem('userLogged'))
   const currentUser = localStorage.getItem('curUser')
+  const [ dp , setDp ] = useState("")
+
   return (
     <>
-      <Header/>
+      <Header dp={dp} />
         <Routes>
 
             <Route
@@ -35,7 +39,7 @@ function App() {
             <Route
                 path='/dashboard'
                 element={ isUserLogged?
-                  <DashBoard  />
+                  <DashBoard setDp={setDp} />
                   :
                   <Navigate to="/"/>
                 } />
@@ -43,21 +47,21 @@ function App() {
             <Route
                 path={`/u/:username`}
                 element={ isUserLogged?
-                    <DashBoard/>
+                    <DashBoard setDp />
                   :
                   <Navigate to="/" />
                   } />
 
             <Route
                 path='/login'
-                element= { isUserLogged? <Navigate to='/dashboard' />: <Login /> }
+                element= { isUserLogged? <Navigate to='/dashboard' />: <Login setDp={setDp} /> }
                 />
 
             <Route path={'/blogs'} element={<Blog/>} />
             <Route path={'/blogs/:blogslug'} element={<BlogDetail/>} />
-            <Route path={'/dashboard'} element={<DashBoard/>} />
+            <Route path={'/dashboard'} element={<DashBoard setDp />} />
 
-            <Route path='/login' element={<Login/>}/>
+            <Route path='/login' element={<Login setDp={setDp} />}/>
             <Route path='/register' element={<Register />} />
             <Route path={'/activity'} element={<Activity/>} />
 

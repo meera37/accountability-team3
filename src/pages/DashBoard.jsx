@@ -6,7 +6,7 @@ import Explore from '../components/Explore'
 import Notifications from '../components/Notifications'
 import { useParams } from 'react-router-dom'
 
-function DashBoard() {
+function DashBoard({setDp}) {
     const [tab,setTab] = useState('dashboard')
     const { username } = useParams()
 
@@ -19,7 +19,7 @@ function DashBoard() {
                         <SideBar setTab={setTab} />
                     </Col>
                     <Col className='p-5' sm={12} md={9} lg={10}>
-                        <ActivityLister userid={username} tab={tab}/>
+                        <ActivityLister setDp={setDp}  userid={username} tab={tab}/>
                         <Explore tab={tab} />
                         <Notifications tab={tab} />
                     </Col>
