@@ -18,8 +18,10 @@ const handleLogout = () => {
             <ul className='text-muted mt-4 flex flex-row flex-md-column list-unstyled md:!stick md:top-[100px] justify-between'>
                 <li className='mt-3 '>
                 <Link onClick={()=> {setTab('dashboard')}} className=" flex flex-col md:flex-row items-center text-black"
-                // to={'/dashboard'}
-                style={{textDecoration: 'none'}}>
+                // to={`/u/${localStorage.getItem('curUser')}`}
+                to={`/dashboard`}
+                style={{textDecoration: 'none'}}
+                >
                     <FontAwesomeIcon icon={faHouseUser} className='me-2 ms-3' />Dashboard
                 </Link>
                 </li>

@@ -10,12 +10,20 @@ function Header({dp}) {
 
   const [menuopen, setmenuopen] = useState(false)
 
+  // const header_links = {
+  //   'Home': 'home',
+  //   'features': 'feature',
+  //   'about': 'about',
+  //   'blog': 'blogs',
+  //   'contact': 'contact',
+  // }
+
   const header_links = {
-    'Home': 'home',
-    'features': 'feature',
-    'about': 'about',
+    'Home': '/',
+    'features': '/',
+    'about': '/',
     'blog': 'blogs',
-    'contact': 'contact',
+    'contact': '/',
   }
 
   return (
@@ -52,7 +60,7 @@ function Header({dp}) {
             {/* free avatar api - https://www.dicebear.com/playground/ */}
 
               <img className="rounded-circle shadow-4-strong w-[40px] h-[40px] md:w-[80px] md:h-[80px]" alt="avatar2" src={`https://api.dicebear.com/9.x/adventurer/svg?seed=${dp}`} />
-              
+
               <p className='mt-3 me-1 text-bold'>Hello, {currentUser}</p>
           </div>
         )
