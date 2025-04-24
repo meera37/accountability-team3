@@ -1,0 +1,211 @@
+* {
+    margin: 0px;
+    padding: 0px;
+}
+
+body {
+    background-color: #f8fafc;
+    scroll-behavior: smooth;
+}
+
+/* Hero Section */
+.herosection {
+    background-image: url('https://lh4.googleusercontent.com/_ArbKQ9PjTf3TNq9aJg3yEB7eQNahG2UDRc5xbp6V4CWbpJGV08efLMQNQGkzP5_SOIOe-aOjJNPU2IBZUW1JyWCkmMO5xIqHo-GQMmEJOnlEodE-PPZEzpt_QR5cJYaJFtoNS8m');
+    height: 100vh;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: bottom;
+    padding-top: 5rem;
+    text-align: center;
+    animation: fadeInUp 2s ease-in-out;
+}
+
+.glass-card {
+    background: rgba(255, 255, 255, 0.26);
+    
+    border-radius: 16px;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+
+.herosection h1 {
+    animation: slideInDown 2s ease-out;
+}
+.hero-text{
+    animation: slideInDown 2s ease-out;
+    
+}
+
+.hero-text:hover {
+    transform: scale(1.02);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+
+.herosection p {
+    animation: fadeIn 1.5s ease-in-out;
+    
+}
+
+.button1:hover {
+   
+    color: rgb(0, 0, 0);
+    transform: scale(1.05);
+    transition: all 0.3s ease;
+    border: none;
+}
+
+/* Section Titles */
+section h2 {
+    animation: fadeInUp 3s ease-in-out;
+}
+
+/* About + How It Works Cards */
+.bg-light,
+.bg-warning {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.bg-light:hover,
+.bg-warning:hover {
+    transform: scale(1.02);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* Image Animations */
+img.rounded {
+    transition: transform 0.4s ease;
+}
+
+img.rounded:hover {
+    transform: scale(1.03);
+}
+
+/* Features List */
+#features ul li {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    transition: all 0.3s ease;
+}
+
+#features ul li:hover {
+    color: #f59e0b;
+    transform: translateX(8px);
+}
+
+/* Testimonials */
+.carousel .card {
+    transition: transform 0.4s ease;
+}
+
+.carousel .card:hover {
+    transform: scale(1.01);
+}
+
+/* FAQ Accordion */
+.accordion-button:not(.collapsed) {
+    background-color: #facc15;
+    color: #1e293b;
+}
+
+.accordion-button:hover {
+    background-color: #fde68a;
+    transition: all 0.3s ease;
+}
+
+/* Achievements */
+.shadow-sm:hover {
+    transform: translateY(-5px);
+    transition: transform 0.3s ease;
+}
+
+
+
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideInDown {
+    from {
+        transform: translateY(-30px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0px);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* Responsive Fixes */
+@media (max-width: 768px) {
+    .herosection {
+        height: auto;
+        padding-bottom: 4rem;
+    }
+
+    .carousel .card-body {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .carousel img {
+        margin-bottom: 1rem;
+    }
+}
+
+
+
+
+
+
+
+
+.testimonial-card {
+    animation: fadeInUp 0.7s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    min-height: auto;
+  }
+  
+  .testimonial-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+  }
+  
+  .testimonial-avatar {
+    transition: transform 0.3s ease;
+  }
+  
+  .testimonial-avatar:hover {
+    transform: scale(1.04);
+  }
+  
+  .testimonial-text {
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #444;
+    max-width: 90%;
+  }
+  
