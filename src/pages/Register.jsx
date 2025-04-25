@@ -1,10 +1,10 @@
 import React from 'react'
 import Reg from '../components/Reg'
 
-function Register() {
+function Register({names}) {
   return (
   <>
-    <Reg/>
+    <Reg names={names}/>
   </>
   )
 }

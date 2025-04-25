@@ -60,7 +60,7 @@ function LoginForm({ setDp }) {
         localStorage.setItem('curUser', user.username)
 
         const res = await profilePicChangeApi(user.username)
-
+        console.log(res)
         if (res.status >= 200 && res.status < 300){
           const picture = res.data.picture
           localStorage.setItem('dp', picture)

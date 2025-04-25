@@ -12,7 +12,7 @@ function ExploreCard({ activity, openModal  }) {
 
           <div className='d-flex justify-content-center ' >
             <Link to={`/u/${activity.userId}`} reloadDocument>
-              <img className="rounded-circle shadow-4-strong border-warning border-2 mt-4 p-1" width={100} alt="avatar2" src="https://api.dicebear.com/9.x/adventurer/svg?seed=Aidan" />
+              <img className="rounded-circle shadow-4-strong border-warning border-2 mt-4 p-1" width={100} alt="avatar2" src={`https://api.dicebear.com/9.x/adventurer/svg?seed=${activity.picture}`} />
               <Card.Title className="fw-bold text-dark text-center no-underline">{activity.userId}</Card.Title>
             </Link>
           </div>
