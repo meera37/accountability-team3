@@ -8,8 +8,10 @@ function Explore({tab}) {
 
   const shuffleArray = (arr) => {
     for(let i = 0 ; i < arr.length -1 ; i++){
-      const j = Math.floor(Math.random()*(i+1))
-      [arr[i], arr[j]] = [ arr[j], arr[i]]
+      let j = Math.floor(Math.random()*(i+1))
+      let temp = arr[i]
+      arr[i] = arr[j]
+      arr[j] = temp
     }
     return arr;
   }
@@ -30,25 +32,26 @@ function Explore({tab}) {
   useEffect(() => {
     const fetchHistory = async () => {
       setLoading(true);
-      
+
       try {
         const result = await fetchAllUserHistoryApi();
         const userDataArray = result?.data || [];
         const extractedActivities = [];
 
-        userDataArray.forEach(user => {
+        userDataArray.forEach( user => {
           for (const key in user) {
             if (user.hasOwnProperty(key) && typeof user[key] === 'object' && user[key] !== null && user[key].hasOwnProperty('type')) {
-              const activity = user[key];
+               const activity = user[key];
 
-              if (activity.type === 'public') {
+              if (activity.type == 'public' && user.id != currentUser) {
                 console.log("Public Activity:", { name: key, details: activity });
+                extractedActivities.push({ name: key, details: activity, userId: user.id , picture: user.picture  });
               }
-              extractedActivities.push({ name: key, details: activity, userId: user.id });
             }
           }
         });
-const filteredActivities = extractedActivities.filter(activity => activity.userId !== currentUser);
+
+let filteredActivities = shuffleArray(extractedActivities)
 
 setHistoryItems(filteredActivities)
         setLoading(false);
@@ -64,7 +67,6 @@ setHistoryItems(filteredActivities)
     }
       setLoading(false);
   }, [tab, currentUser]);
-
 
   return (
     <>

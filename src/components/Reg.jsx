@@ -6,9 +6,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
-import { getAllUsersApi, registerUserApi, createUserActivityApi, createActivityHistoryApi } from '../services/allApi';
+import { getAllUsersApi, registerUserApi, createUserActivityApi, createActivityHistoryApi,  createPictureApi } from '../services/allApi';
 
-function Reg() {
+function Reg({names}) {
     const [user, setUser] = useState("")
     const [pswd, setPswd] = useState("")
     const [email, setEmail] = useState("")
@@ -74,9 +74,13 @@ function Reg() {
             { name: "Time management", description: "Organizing and planning your time effectively." },
             { name: "journalling", description: "Reflective writing for personal growth." }
         ]
+        // randomized avatar at the registration
+         let index = Math.floor(Math.random()*10)
+
         const bootSeq = {
             // "core": core,
             //"core": core.map(activity => ({ name: activity.name })),
+            "picture": names[index],
             "core": core.map(activity => activity.name ),
             "private": [],
             "public": [],
@@ -87,6 +91,7 @@ function Reg() {
         let startdate = new Date().toISOString().slice(0, 10)
         let historySequence = {
             id: user,
+            picture: names[index],
         }
 
         core.forEach(activity => (historySequence[activity.name] = {
@@ -100,6 +105,9 @@ function Reg() {
             },
             history: { "2025": [] }
         }))
+        console.log('pic',names[index])
+
+        const res = await createPictureApi({id: user , picture: names[index] })
 
         console.log("coreActivities:", core);
         console.log("bootSeq:", bootSeq);
@@ -155,7 +163,6 @@ function Reg() {
             // console.log("Register error:", error);
             toast.error("Registration failed")
         }
-
     }
 
     return (

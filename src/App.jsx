@@ -22,6 +22,16 @@ function App() {
   const isUserLogged = JSON.parse(localStorage.getItem('userLogged'))
   const currentUser = localStorage.getItem('curUser')
   const [ dp , setDp ] = useState("")
+  const names = ['Valentina','Jade','Alexander','Jameson','Mason','Emery','Robert','Aidan','Jessica','Easton','Christopher','Liliana','Jocelyn','Wyatt','Eden','Vivian','Ryan','Maria','Caleb','Adrian']
+
+
+  useEffect(()=>{
+    const picture = localStorage.getItem('dp')
+    console.log(picture)
+    if(picture){
+      setDp(picture)
+    }
+  },[])
 
   return (
     <>
@@ -59,11 +69,11 @@ function App() {
 
             <Route path={'/blogs'} element={<Blog/>} />
             <Route path={'/blogs/:blogslug'} element={<BlogDetail/>} />
-            <Route path={'/dashboard'} element={<DashBoard setDp />} />
+            <Route path={'/dashboard'} element={<DashBoard setDp={setDp}  names={names} />} />
 
             <Route path='/login' element={<Login setDp={setDp} />}/>
-            <Route path='/register' element={<Register />} />
-            <Route path={'/activity'} element={<Activity/>} />
+            <Route path='/register' element={<Register names={names} />} />
+            <Route path={'/activity'} element={<Activity />} />
 
 
 

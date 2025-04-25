@@ -10,6 +10,7 @@ const navigate = useNavigate()
 const handleLogout = () => {
   localStorage.setItem('userLogged', JSON.stringify(false))
   localStorage.setItem('curUser','')
+  localStorage.removeItem('dp')
   navigate('/login')
 }
 
@@ -30,11 +31,11 @@ const handleLogout = () => {
                         <FontAwesomeIcon icon={faGlobe} className='me-2 ms-3 ' />Explore
                     </Link>
                 </li>
-                <li className='flex flex-col md:flex-row items-center mt-3 '>
+                {/* <li className='flex flex-col md:flex-row items-center mt-3 '>
                     <Link onClick={() => {setTab('notifications')}} className="flex flex-col md:flex-row items-center  text-black" style={{textDecoration: 'none'}}>
                         <FontAwesomeIcon icon={faBell} className='me-2 ms-3' />Notification
                     </Link>
-                </li>
+                </li> */}
                 <li className='flex flex-col md:flex-row items-center mt-3 '>
                 <Link onClick={() => {handleLogout()}} className="flex flex-col md:flex-row items-center  text-black" style={{textDecoration: 'none'}}>
                     <FontAwesomeIcon icon={faRightFromBracket} className='me-2 ms-3' />Logout
