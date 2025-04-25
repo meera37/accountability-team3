@@ -1,13 +1,14 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect , use } from 'react'
 import SummaryCards from './SummaryCards'
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
-import { fetchAllActivitiesApi, fetchSingleUserApi, updateUserHabitsApi, fetchAllUserHistoryApi, patchHistoryApi, setProfilePictureApi } from '../services/allApi';
+import { fetchAllActivitiesApi, fetchSingleUserApi, updateUserHabitsApi } from '../services/allApi';
+import { fetchAllUserHistoryApi, patchHistoryApi, setProfilePictureApi ,patchUserHabitListApi } from '../services/allApi'
 import ActivityRow from './ActivityRow';
 import { useParams , useLocation , useNavigate } from 'react-router-dom'
 
-function ActivityLister({tab,userid,dp ,setDp}) {
+function ActivityLister({tab,userid ,setDp}) {
 
   useEffect(() => {
     let curUser = userid || localStorage.getItem('curUser')
@@ -20,14 +21,27 @@ function ActivityLister({tab,userid,dp ,setDp}) {
   const fetchdata = async (curUser) => {
     try {
       const request = await fetchSingleUserApi(curUser);
+      const result = await fetchAllUserHistoryApi(curUser)
       const userData = request.data;
+      const userHistory = result.data
+
+      console.log(userHistory)
+      // console.log(Object.keys(result.data))
+
+      const bypassData =  Object.keys(userHistory).filter( key => userHistory[key].hasOwnProperty("type")  )
+      console.log(bypassData)
 
       if (userData) {
         console.log("Fetched user data:", userData);
 
-        const publicActivitiesObjects = (userData.public || []).map(activity => ({ name: activity, type: 'public' }));
-        const privateActivitiesObjects = (userData.private || []).map(activity => ({ name: activity, type: 'private' }));
-        const coreActivitiesObjects = (userData.core || []).map(activity => ({ name: activity, type: 'core' }));
+        const publicActivitiesObjects = (userData.public || []).map(activity => ({ name: activity, type: 'public' ,
+           description: userHistory[activity].description , author: userHistory[activity].author || curUser  }));
+        const privateActivitiesObjects = (userData.private || []).map(activity => ({ name: activity, type: 'private' ,
+          description: userHistory[activity].description , author : curUser
+         }));
+        const coreActivitiesObjects = (userData.core || []).map(activity => ({ name: activity, type: 'core',
+          description: userHistory[activity].description , author : "platform"
+         }));
 
         setPublicActivities(publicActivitiesObjects);
         setPrivateActivities(privateActivitiesObjects);
@@ -69,7 +83,7 @@ function ActivityLister({tab,userid,dp ,setDp}) {
   const [descriptionLength, setDescriptionLength] = useState(15);
 
   // profilepic ssetting
-
+  const names = ['Valentina','Jade','Alexander','Jameson','Mason','Emery','Robert','Aidan','Jessica','Easton','Christopher','Liliana','Jocelyn','Wyatt','Eden','Vivian','Ryan','Maria','Caleb','Adrian']
   const [index , setIndex] = useState(0)
   const [profile , setProfile] = useState(localStorage.getItem('dp')||'');
   // console.log(urlpath,currentUser, loggedUser)
@@ -232,7 +246,6 @@ function ActivityLister({tab,userid,dp ,setDp}) {
   }
 
   // func to set profilepic
-
   const handleprevious = ()=>{
     const value = index<0?names.length-1:index-1
     setIndex(value)
@@ -246,15 +259,16 @@ function ActivityLister({tab,userid,dp ,setDp}) {
   }
 
   const handlesetprofile = async()=>{
-
+    const res = await patchUserHabitListApi({"id": currentUser ,"picture": names[index]})
     const result = await setProfilePictureApi({
       "id":currentUser,
       "picture": names[index]
     })
-    setDp(result.data.picture);
+    setDp(names[index]);
+    const historyupdate = await patchHistoryApi({ "id": currentUser , "picture": names[index] })
+    console.log(historyupdate.data)
+    localStorage.setItem('dp',names[index]);
   }
-
-  const names = ['Valentina','Jade','Alexander','Jameson','Mason','Emery','Robert','Aidan','Jessica','Easton','Christopher','Liliana','Jocelyn','Wyatt','Eden','Vivian','Ryan','Maria','Caleb','Adrian']
 
   return (
     <>
@@ -263,19 +277,20 @@ function ActivityLister({tab,userid,dp ,setDp}) {
         <div className='mb-5 flex justify-center items-center flex-col'>
             <div className='d-flex justify-center'>
               <img className="rounded-circle w-[150px] h-[150px] shadow-4-strong " alt="avatar2" src={`https://api.dicebear.com/9.x/adventurer/svg?seed=${profile}`} />
-
             </div>
 
             <div className='d-flex justify-content-center text-center flex-col'>
                 <h1>{ currentUser }</h1>
 
-                  {/* button profilepic setting */}
+                {
+                  /* button profilepic setting */
+                authUser &&
                 <div className='flex justify-between items-center flex-row'>
-                <button onClick={handleprevious} className='bg-amber-700 text-white p-2 rounded w-20 me-3'>Previous</button>
-                <button onClick={handlesetprofile} className='bg-amber-300 text-white p-2 rounded w-20 me-3'>Set</button>
-                <button onClick={handleNext} className='bg-green-500 text-white p-2 rounded w-20'>Next</button>
-              </div>
-
+                  <button onClick={handleprevious} className='bg-amber-700 text-white p-2 rounded w-20 me-3'>Previous</button>
+                  <button onClick={handlesetprofile} className='bg-amber-300 text-white p-2 rounded w-20 me-3'>Set</button>
+                  <button onClick={handleNext} className='bg-green-500 text-white p-2 rounded w-20'>Next</button>
+                </div>
+                }
 
             </div>
         </div>

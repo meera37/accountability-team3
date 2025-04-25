@@ -1,5 +1,6 @@
 import { serverurl } from "./serverurl"
 import { commonApi } from "./commonApi"
+import { common } from "@mui/material/colors";
 
 //register component
 export const registerUserApi = async (reqBody)=>{
@@ -30,6 +31,11 @@ export const fetchSingleUserApi = async(user) => {
 export const updateUserHabitsApi = async (reqBody) => {
     return await commonApi('PUT', `${serverurl}/alluserhabits/${reqBody.id}`,reqBody);
 };
+
+//PATCH
+export const patchUserHabitListApi = async(reqBody) => {
+    return await commonApi('PATCH',`${serverurl}/alluserhabits/${reqBody.id}`,reqBody)
+}
 
 //POST
 export const createActivityHistoryApi = async (reqBody) => {
@@ -74,11 +80,14 @@ export const addToUsernameApi = async(reqBody) => {
     return await commonApi('PUT',`${serverurl}/usernames/`, reqBody)
 }
 
-//post profilepicture 
+//post profilepicture
+export const createPictureApi = async(reqBody) => {
+    return await commonApi('POST',`${serverurl}/profilepicture/`,reqBody)
+}
+
 export const setProfilePictureApi = async(reqBody) => {
     return await commonApi('PUT',`${serverurl}/profilepicture/${reqBody.id}`,reqBody)
 };
-
 
 export const profilePicChangeApi = async(username) => {
     return await commonApi('GET',`${serverurl}/profilepicture/${username}`)
