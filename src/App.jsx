@@ -24,10 +24,8 @@ function App() {
   const [ dp , setDp ] = useState("")
   const names = ['Valentina','Jade','Alexander','Jameson','Mason','Emery','Robert','Aidan','Jessica','Easton','Christopher','Liliana','Jocelyn','Wyatt','Eden','Vivian','Ryan','Maria','Caleb','Adrian']
 
-
   useEffect(()=>{
     const picture = localStorage.getItem('dp')
-    console.log(picture)
     if(picture){
       setDp(picture)
     }
@@ -73,7 +71,7 @@ function App() {
 
             <Route path='/login' element={<Login setDp={setDp} />}/>
             <Route path='/register' element={<Register names={names} />} />
-            <Route path={'/activity'} element={<Activity />} />
+            <Route path={'/dashboard/activity'} element={<Activity />} />
 
 
 

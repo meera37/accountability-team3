@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 import DeleteConfirmModal from './DeleteConfirmModal';
 
 function ActivityRow({ activity, idx, handleOpenDescriptionModal, descriptionLength, isPublicSection, onAddTemplate, typeCol ,  authUser }) {
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+    const navigate = useNavigate();
 
     const buttonStyle = {
         marginRight: '8px',
@@ -38,12 +40,12 @@ function ActivityRow({ activity, idx, handleOpenDescriptionModal, descriptionLen
                 <td className="px-4 py-2 text-center">
 
                   <span className="flex space-x-10 justify-center">
-                        <button
+
+                        <button onClick={()=>{navigate('/dashboard/activity')}}
                         style={buttonStyle}
                             className="bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600 text-sm">
                             View More
                         </button>
-
                         {
                          authUser &&
                             <button onClick={handleDeleteClick} style={buttonStyle} className="bg-red-500 text-white px-2 py-1 rounded hover:text-red-400 hover:bg-white-600 text-sm">
