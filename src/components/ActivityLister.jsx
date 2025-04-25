@@ -25,11 +25,8 @@ function ActivityLister({tab,userid ,setDp}) {
       const userData = request.data;
       const userHistory = result.data
 
-      console.log(userHistory)
-      // console.log(Object.keys(result.data))
-
-      const bypassData =  Object.keys(userHistory).filter( key => userHistory[key].hasOwnProperty("type")  )
-      console.log(bypassData)
+      // set profile picture on page reload
+      setProfile(userHistory.picture)
 
       if (userData) {
         console.log("Fetched user data:", userData);
